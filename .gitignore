@@ -1,0 +1,22 @@
+﻿# Ambiente Python
+.env
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+
+# Report generati (PDF clienti)
+reports/output/
+
+# IDE
+.vscode/
+.idea/
+*.DS_Store
+
+# Dipendenze
+node_modules/
+
+# Log
+*.log

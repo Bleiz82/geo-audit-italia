@@ -1,0 +1,83 @@
+{
+  "intestazione": {
+    "titolo": "GEO Audit Report",
+    "sottotitolo": "Analisi di Visibilità AI — Generative Engine Optimization",
+    "prodotto": "GEO Audit Italia",
+    "powered_by": "Powered by DigIdentity Agency",
+    "data_label": "Data analisi",
+    "sito_analizzato": "Sito analizzato",
+    "piano": "Piano"
+  },
+  "geo_score": {
+    "titolo": "GEO Score Complessivo",
+    "descrizione": "Il GEO Score misura quanto il tuo sito è ottimizzato per essere trovato e citato dai motori di ricerca AI come ChatGPT, Perplexity, Claude e Google AI Overviews.",
+    "livelli": {
+      "0-30": {"etichetta": "Invisibile alle AI", "colore": "#DC2626", "emoji": "🔴"},
+      "31-50": {"etichetta": "Visibilità minima", "colore": "#EA580C", "emoji": "🟠"},
+      "51-70": {"etichetta": "In sviluppo", "colore": "#CA8A04", "emoji": "🟡"},
+      "71-85": {"etichetta": "Buona visibilità", "colore": "#16A34A", "emoji": "🟢"},
+      "86-100": {"etichetta": "Eccellente", "colore": "#0891B2", "emoji": "💎"}
+    }
+  },
+  "moduli": {
+    "citabilita": {
+      "nome": "Citabilità AI",
+      "descrizione": "Quanto il contenuto è strutturato per essere citato dalle AI",
+      "peso": "25%"
+    },
+    "brand": {
+      "nome": "Autorità del Brand",
+      "descrizione": "Presenza del brand su piattaforme citate dalle AI",
+      "peso": "20%"
+    },
+    "contenuto": {
+      "nome": "Qualità Contenuto & E-E-A-T",
+      "descrizione": "Esperienza, Competenza, Autorevolezza, Affidabilità",
+      "peso": "20%"
+    },
+    "crawler": {
+      "nome": "Accesso Crawler AI",
+      "descrizione": "Accesso dei bot AI al sito e file llms.txt",
+      "peso": "15%"
+    },
+    "schema": {
+      "nome": "Dati Strutturati",
+      "descrizione": "Schema markup JSON-LD per la comprensione AI",
+      "peso": "10%"
+    },
+    "piattaforme": {
+      "nome": "Ottimizzazione Piattaforme",
+      "descrizione": "Readiness specifica per ChatGPT, Perplexity, Google AIO",
+      "peso": "10%"
+    }
+  },
+  "priorita": {
+    "titolo": "Piano d'Azione Prioritizzato",
+    "sottotitolo": "Interventi ordinati per impatto sul GEO Score",
+    "livelli": {
+      "CRITICA": {"colore": "#DC2626", "emoji": "🔴"},
+      "ALTA": {"colore": "#EA580C", "emoji": "🟠"},
+      "MEDIA": {"colore": "#CA8A04", "emoji": "🟡"},
+      "BASSA": {"colore": "#16A34A", "emoji": "🟢"}
+    }
+  },
+  "footer": {
+    "disclaimer": "Questo report è generato automaticamente da GEO Audit Italia. I dati sono aggiornati alla data dell'analisi. Per una consulenza approfondita contatta DigIdentity Agency.",
+    "contatto": "info@digidentityagency.it",
+    "sito": "https://digidentityagency.it",
+    "copyright": "© DigIdentity Agency — Tutti i diritti riservati"
+  },
+  "crawler_ai": {
+    "GPTBot": "OpenAI / ChatGPT",
+    "ChatGPT-User": "ChatGPT Browsing",
+    "OAI-SearchBot": "OpenAI Search",
+    "ClaudeBot": "Anthropic / Claude",
+    "PerplexityBot": "Perplexity AI",
+    "Google-Extended": "Google Gemini / AI Overviews",
+    "Gemini": "Google Gemini",
+    "Bingbot": "Microsoft Copilot",
+    "FacebookBot": "Meta AI",
+    "Applebot-Extended": "Apple Intelligence",
+    "YouBot": "You.com AI"
+  }
+}

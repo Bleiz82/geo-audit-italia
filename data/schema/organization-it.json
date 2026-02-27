@@ -1,0 +1,49 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://INSERISCI-URL-SITO/#organization",
+  "name": "NOME ORGANIZZAZIONE",
+  "legalName": "RAGIONE SOCIALE S.R.L. / S.P.A. / etc.",
+  "description": "DESCRIZIONE ORGANIZZAZIONE",
+  "url": "https://INSERISCI-URL-SITO",
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://INSERISCI-URL-SITO/images/logo.png"
+  },
+  "foundingDate": "ANNO",
+  "foundingLocation": {
+    "@type": "Place",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "CITTÀ",
+      "addressCountry": "IT"
+    }
+  },
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "telephone": "+39-XXX-XXXXXXX",
+      "contactType": "customer service",
+      "availableLanguage": ["Italian"],
+      "areaServed": "IT"
+    }
+  ],
+  "sameAs": [
+    "https://www.linkedin.com/company/NOME",
+    "https://www.facebook.com/NOME",
+    "https://twitter.com/NOME",
+    "https://it.wikipedia.org/wiki/NOME"
+  ],
+  "vatID": "IT XXXXXXXXXXXXXXX",
+  "numberOfEmployees": {
+    "@type": "QuantitativeValue",
+    "value": "NUMERO"
+  },
+  "knowsAbout": [
+    "Marketing Digitale",
+    "SEO",
+    "GEO - Generative Engine Optimization",
+    "INSERISCI SETTORE SPECIFICO"
+  ],
+  "slogan": "IL TUO SLOGAN AZIENDALE"
+}

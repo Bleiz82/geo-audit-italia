@@ -8,7 +8,12 @@ import httpx
 from bs4 import BeautifulSoup
 from loguru import logger
 from langdetect import detect
-import textstat
+try:
+    import textstat
+    TEXTSTAT_DISPONIBILE = True
+except ImportError:
+    TEXTSTAT_DISPONIBILE = False
+
 import re
 
 
@@ -26,7 +31,7 @@ async def analizza_contenuto(url: str) -> dict:
 
     soup = BeautifulSoup(html, "lxml")
 
-    testo = ' '.join(p.get_text(separator=' ', strip=True') for p in soup.find_all('p'))
+    testo = ' '.join(p.get_text(separator=' ', strip=True) for p in soup.find_all('p'))
     n_parole = len(testo.split())
     lingua = None
     try:

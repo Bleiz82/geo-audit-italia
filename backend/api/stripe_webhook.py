@@ -4,6 +4,7 @@ Trigger dell'audit GEO dopo pagamento confermato
 """
 
 import stripe
+from typing import Optional
 import json
 from fastapi import APIRouter, Request, HTTPException, BackgroundTasks
 from loguru import logger
@@ -15,9 +16,21 @@ from backend.api.audit_trigger import avvia_audit_completo
 class Settings(BaseSettings):
     stripe_secret_key: str
     stripe_webhook_secret: str
+    stripe_price_id_single: Optional[str] = "price_SINGOLO_ID"
+    stripe_price_id_agency: Optional[str] = "price_AGENCY_MONTHLY_ID"
+    resend_api_key: Optional[str] = ""
+    email_from: Optional[str] = "noreply@geo-audit.it"
+    email_from_name: Optional[str] = "GEO Audit Italia"
+    redis_url: Optional[str] = "redis://localhost:6379/0"
+    app_secret_key: Optional[str] = "chiave-segreta"
+    app_base_url: Optional[str] = "http://localhost:8000"
+    debug: Optional[bool] = True
+    report_logo_path: Optional[str] = "frontend/assets/images/logo-digidentity.png"
+    report_output_dir: Optional[str] = "reports/output/"
 
     class Config:
         env_file = ".env"
+        extra = "allow"
 
 
 settings = Settings()

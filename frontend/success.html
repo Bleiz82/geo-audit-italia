@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Pagamento Completato — GEO Audit Italia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body{margin:0;background:#0a0a0a;color:#e0e0e0;font-family:Inter,Arial,sans-serif;}
+        nav{position:fixed;top:0;width:100%;background:rgba(0,0,0,0.95);backdrop-filter:blur(8px);border-bottom:1px solid rgba(249,1,0,0.2);z-index:1000;padding:8px 16px;display:flex;justify-content:space-between;align-items:center;}
+        nav .logo{font-family:'Poppins',Arial,sans-serif;font-weight:900;font-size:20px;}nav .logo span:first-child{color:#F90100;}nav .logo span:last-child{color:#fff;}nav .logo + span{display:block;font-family:Inter;font-size:0.6em;color:#e0e0e0;letter-spacing:3px;}
+        nav ul{list-style:none;margin:0;padding:0;display:flex;}nav li{margin:0 12px;}
+        button.cta{background:linear-gradient(45deg,#F90100,#DC0000);color:#fff;padding:12px 24px;border:none;border-radius:12px;font-family:Poppins,Arial,sans-serif;font-weight:700;cursor:pointer;box-shadow:0 8px 25px rgba(249,1,0,0.4);}
+        button.outline{background:transparent;color:#F90100;border:1px solid #F90100;padding:12px 24px;border-radius:12px;font-family:Poppins,Arial,sans-serif;font-weight:700;cursor:pointer;}
+        .center{display:flex;justify-content:center;align-items:center;}
+        .fullscreen{height:100vh;}
+        .status-box{border:1px solid rgba(16,185,129,0.3);background:rgba(16,185,129,0.05);padding:16px;border-radius:6px;font-family:JetBrains Mono,monospace;}
+        .success-icon{width:60px;height:60px;border-radius:50%;background:#10B981;color:#fff;font-size:36px;display:flex;justify-content:center;align-items:center;transform:scale(0);animation:pop 0.5s forwards;}
+        @keyframes pop{to{transform:scale(1);}}
+        a{color:#F90100;}
+        footer{padding:20px;text-align:center;font-size:10px;color:#777;}
+        .highlight{background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.3);padding:12px;border-radius:6px;margin-top:20px;}
+        .small-gray{color:#888;font-size:12px;}
+    </style>
+</head>
+<body>
+<nav>
+    <div class="logo"><span>Dig</span><span>Identity</span><span style="display:block;font-size:0.6em;letter-spacing:3px;color:#e0e0e0;">AGENCY</span></div>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/">Come funziona</a></li>
+        <li><a href="/">Prezzi</a></li>
+        <li><a href="/">FAQ</a></li>
+    </ul>
+    <button class="cta">Analizza ora →</button>
+</nav>
+
+<div class="center fullscreen column" style="padding-top:100px;gap:20px;">
+    <div class="success-icon">✓</div>
+    <h1>Pagamento completato! 🎉</h1>
+    <p>Il tuo GEO Audit è in elaborazione. Riceverai il report PDF via email entro 5 minuti.</p>
+    <div class="status-box" id="status-box">
+        // STATUS AUDIT<br>
+        <span>✓ Pagamento confermato</span><br>
+        <span class="step">⟳ Analisi citabilità AI in corso...</span><br>
+        <span class="step">⟳ Scansione crawler in corso...</span><br>
+        <span class="step">⟳ Analisi brand mention in corso...</span><br>
+        <span class="step">⟳ Schema markup in corso...</span><br>
+        <span class="step">⟳ Analisi E-E-A-T in corso...</span><br>
+        <span class="step">⟳ Generazione report PDF...</span><br>
+        <span class="small-gray" id="session-info"></span>
+    </div>
+    <p class="small-gray">📧 Controlla la tua email — anche la cartella spam</p>
+    <div class="flex center" style="gap:16px;">
+        <a href="/" class="cta">Analizza un altro sito →</a>
+        <a href="https://digidentityagency.it" class="outline">Scopri i servizi DigIdentity →</a>
+    </div>
+    <div class="highlight">💡 Vuoi il piano Agency? Analizza fino a 10 siti/mese con PDF white label. <a href="mailto:info@digidentityagency.it">Contattaci →</a></div>
+</div>
+
+<footer>© 2026 DigIdentity Agency — <a href="https://digidentityagency.it">digidentityagency.it</a></footer>
+
+<script>
+let steps=document.querySelectorAll('.step');
+let idx=0;
+function advance(){if(idx<steps.length){steps[idx].textContent=steps[idx].textContent.replace('⟳','✓');idx++;setTimeout(advance,800);}else{steps[idx-1].textContent='✓ Report inviato via email!';}}
+advance();
+let params=new URLSearchParams(window.location.search);
+if(params.get('session_id')){document.getElementById('session-info').textContent='Ordine ID: '+params.get('session_id');}
+</script>
+
+</body>
+</html>

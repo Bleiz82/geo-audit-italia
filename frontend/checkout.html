@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Checkout — GEO Audit Italia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body{margin:0;background:#0a0a0a;color:#e0e0e0;font-family:Inter,Arial,sans-serif;}
+        nav{position:fixed;top:0;width:100%;background:rgba(0,0,0,0.95);backdrop-filter:blur(8px);border-bottom:1px solid rgba(249,1,0,0.2);z-index:1000;padding:8px 16px;display:flex;justify-content:space-between;align-items:center;}
+        nav .logo{font-family:'Poppins',Arial,sans-serif;font-weight:900;font-size:20px;}nav .logo span:first-child{color:#F90100;}nav .logo span:last-child{color:#fff;}nav .logo + span{display:block;font-family:Inter;font-size:0.6em;color:#e0e0e0;letter-spacing:3px;}
+        nav ul{list-style:none;margin:0;padding:0;display:flex;}nav li{margin:0 12px;}
+        button.cta{background:linear-gradient(45deg,#F90100,#DC0000);color:#fff;padding:12px 24px;border:none;border-radius:12px;font-family:Poppins,Arial,sans-serif;font-weight:700;cursor:pointer;box-shadow:0 8px 25px rgba(249,1,0,0.4);}
+        .center{display:flex;justify-content:center;align-items:center;}
+        .fullscreen{height:100vh;}
+        .spinner{width:60px;height:60px;border:6px solid rgba(249,1,0,0.3);border-top:6px solid #F90100;border-radius:50%;animation:spin 1s linear infinite;margin-bottom:20px;}
+        @keyframes spin{0%{transform:rotate(0);}100%{transform:rotate(360deg);}}
+        .box{border:1px solid rgba(249,1,0,0.3);padding:12px;border-radius:6px;margin-top:20px;color:#e0e0e0;}
+        a{color:#F90100;}
+        footer{padding:20px;text-align:center;font-size:10px;color:#777;}    
+    </style>
+</head>
+<body>
+<nav>
+    <div class="logo"><span>Dig</span><span>Identity</span><span style="display:block;font-size:0.6em;letter-spacing:3px;color:#e0e0e0;">AGENCY</span></div>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/">Come funziona</a></li>
+        <li><a href="/">Prezzi</a></li>
+        <li><a href="/">FAQ</a></li>
+    </ul>
+    <button class="cta">Analizza ora →</button>
+</nav>
+
+<div class="center fullscreen column" style="padding-top:100px;">
+    <div class="spinner"></div>
+    <p>// Preparazione pagamento in corso...</p>
+    <p style="color:#888;">Stai per essere reindirizzato a Stripe per completare il pagamento in sicurezza.</p>
+    <div class="box">🔒 Pagamento sicuro e criptato via Stripe — DigIdentity Agency non vede i tuoi dati di pagamento</div>
+    <p style="color:#666;font-size:12px;margin-top:10px;">Se non vieni reindirizzato entro 5 secondi, <a href="#" id="manual-redirect">clicca qui</a></p>
+    <p id="error-msg" style="color:#EF4444;display:none;margin-top:20px;"></p>
+</div>
+
+<footer>© 2026 DigIdentity Agency — <a href="https://digidentityagency.it">digidentityagency.it</a></footer>
+
+<script>
+async function createSession(){
+    const url=sessionStorage.getItem('url_sito');
+    const email=sessionStorage.getItem('email');
+    const piano=sessionStorage.getItem('piano')||'singolo';
+    try{
+        let res=await fetch('/api/stripe/create-checkout-session',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url_sito:url,email,piano})});
+        let data=await res.json();
+        window.location.href=data.checkout_url;
+    }catch(e){
+        document.getElementById('error-msg').textContent='Errore creazione pagamento. Torna alla home.';
+        document.getElementById('error-msg').style.display='block';
+    }
+}
+createSession();
+</script>
+</body>
+</html>

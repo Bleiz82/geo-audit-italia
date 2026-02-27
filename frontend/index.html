@@ -448,117 +448,75 @@
         }
 
         /* ========== PRICING SECTION ========== */
-        .pricing {
-            background: var(--light-gray);
-            padding: 4rem 2rem;
-        }
+        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1100px; margin: 0 auto; }
+        .pricing-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 28px 24px; position: relative; }
+        .pricing-featured { border: 2px solid #F90100; transform: scale(1.03); box-shadow: 0 8px 32px rgba(249,1,0,0.15); }
+        .pricing-xl { border: 2px solid #8B5CF6; }
+        .pricing-enterprise { background: #111111; color: white; border: 2px solid #F90100; grid-column: span 1; }
+        .pricing-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #F90100; color: white; padding: 4px 16px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px; white-space: nowrap; }
+        .pricing-badge-purple { background: #8B5CF6; }
+        .pricing-header h3 { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 20px; margin-bottom: 4px; }
+        .pricing-subtitle { font-size: 13px; color: #6b7280; margin-bottom: 16px; }
+        .price-amount { font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 36px; color: #F90100; }
+        .price-period { font-size: 13px; color: #6b7280; margin-left: 4px; }
+        .pricing-features { list-style: none; padding: 0; margin: 20px 0; }
+        .pricing-features li { padding: 7px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
+        .pricing-enterprise .pricing-features li { border-bottom-color: rgba(255,255,255,0.1); }
+        .feat-yes::before { content: "✅ "; }
+        .feat-no::before { content: "❌ "; color: #d1d5db; }
+        .feat-no { color: #9ca3af; }
+        .btn-pricing { display: block; width: 100%; padding: 13px; border-radius: 8px; font-weight: 700; font-size: 14px; text-align: center; cursor: pointer; border: none; background: #F90100; color: white; margin-top: 16px; transition: all 0.2s; text-decoration: none; }
+        .btn-pricing:hover { background: #DC0000; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(249,1,0,0.3); }
+        .btn-pricing-featured { box-shadow: 0 6px 20px rgba(249,1,0,0.3); }
+        .btn-pricing-dark { background: transparent; border: 2px solid #F90100; color: white; }
+        .btn-pricing-dark:hover { background: #F90100; }
+        .pricing-note { text-align: center; font-size: 12px; color: #6b7280; margin-top: 24px; }
 
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            max-width: 1100px;
-            margin: 0 auto;
+        /* BILLING TOGGLE */
+        .billing-toggle {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+          margin-bottom: 40px;
         }
+        .toggle-label { font-size: 14px; font-weight: 600; }
+        .badge-save {
+          background: #D1FAE5;
+          color: #065F46;
+          padding: 2px 8px;
+          border-radius: 20px;
+          font-size: 11px;
+          font-weight: 700;
+          margin-left: 6px;
+        }
+        .toggle-switch {
+          width: 48px;
+          height: 26px;
+          background: #e5e7eb;
+          border-radius: 20px;
+          cursor: pointer;
+          position: relative;
+          transition: background 0.3s;
+        }
+        .toggle-switch.active { background: #F90100; }
+        .toggle-dot {
+          width: 20px;
+          height: 20px;
+          background: white;
+          border-radius: 50%;
+          position: absolute;
+          top: 3px;
+          left: 3px;
+          transition: left 0.3s;
+          box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        }
+        .toggle-switch.active .toggle-dot { left: 25px; }
+        .price-note { font-size: 11px; color: #6b7280; margin-top: 4px; }
+        .pricing-badge-dark { background: #111111; }
 
-        .pricing-card {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 8px;
-            border: 2px solid var(--medium-gray);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .pricing-card.featured {
-            border: 2px solid var(--accent-red);
-            transform: scale(1.05);
-            box-shadow: 0 20px 50px rgba(249, 1, 0, 0.2);
-        }
-
-        .pricing-card:hover {
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-            transform: translateY(-5px);
-        }
-
-        .badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--accent-red);
-            color: white;
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .pricing-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .pricing-subtitle {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .pricing-price {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--accent-red);
-            margin-bottom: 0.5rem;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .pricing-period {
-            color: var(--text-light);
-            margin-bottom: 2rem;
-            font-size: 0.95rem;
-        }
-
-        .pricing-features {
-            list-style: none;
-            margin-bottom: 2rem;
-        }
-
-        .pricing-features li {
-            padding: 0.8rem 0;
-            border-bottom: 1px solid var(--medium-gray);
-            color: var(--text-light);
-            font-size: 0.95rem;
-        }
-
-        .pricing-features li:before {
-            content: '✓';
-            color: var(--accent-red);
-            font-weight: 700;
-            margin-right: 0.8rem;
-        }
-
-        .pricing-button {
-            width: 100%;
-            padding: 1rem;
-            background: var(--accent-red);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-        }
-
-        .pricing-button:hover {
-            background: var(--accent-purple);
-            transform: translateY(-2px);
-        }
+        @media (max-width: 900px) { .pricing-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 600px) { .pricing-grid { grid-template-columns: 1fr; } .pricing-featured { transform: scale(1); } }
 
         /* ========== FAQ SECTION ========== */
         .faq {
@@ -854,56 +812,99 @@
     <!-- PRICING SECTION -->
     <section class="pricing" id="pricing">
         <div class="section-container">
-            <h2 class="section-title">Piani Trasparenti</h2>
-            <p class="section-subtitle">Scegli il piano perfetto per il tuo business</p>
-            
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <div class="pricing-title">Free Audit</div>
-                    <div class="pricing-subtitle">Perfetto per provare</div>
-                    <div class="pricing-price">€0</div>
-                    <div class="pricing-period">Una sola volta</div>
-                    <ul class="pricing-features">
-                        <li>1 audit completo</li>
-                        <li>Rapporto sommario</li>
-                        <li>GEO Score base</li>
-                        <li>Accesso 30 giorni</li>
-                    </ul>
-                    <button class="pricing-button">Inizia Gratis</button>
-                </div>
+<span class="section-label">// PREZZI</span>
+<h2>Piani Trasparenti</h2>
+<p style="text-align:center;color:#6b7280;margin-bottom:32px;font-size:15px">
+  Scegli il piano giusto. Cambia o cancella quando vuoi.
+</p>
 
-                <div class="pricing-card featured">
-                    <div class="badge">Più popolare</div>
-                    <div class="pricing-title">Professional</div>
-                    <div class="pricing-subtitle">Report completo con IA</div>
-                    <div class="pricing-price">€99</div>
-                    <div class="pricing-period">Una tantum</div>
-                    <ul class="pricing-features">
-                        <li>Audit completo GEO</li>
-                        <li>Report 30-50 pagine</li>
-                        <li>Analisi Claude AI</li>
-                        <li>Piano d'azione prioritizzato</li>
-                        <li>Raccomandazioni personalizzate</li>
-                        <li>Accesso 90 giorni</li>
-                    </ul>
-                    <button class="pricing-button">Seleziona</button>
-                </div>
+<!-- TOGGLE MENSILE/ANNUALE -->
+<div class="billing-toggle">
+  <span class="toggle-label" id="label-mensile" style="font-weight:700;color:#111">Mensile</span>
+  <div class="toggle-switch" id="billingToggle" onclick="toggleBilling()">
+    <div class="toggle-dot" id="toggleDot"></div>
+  </div>
+  <span class="toggle-label" id="label-annuale" style="color:#6b7280">
+    Annuale <span class="badge-save">-25% · 2 mesi gratis</span>
+  </span>
+</div>
 
-                <div class="pricing-card">
-                    <div class="pricing-title">Agency</div>
-                    <div class="pricing-subtitle">Per agenzie e team</div>
-                    <div class="pricing-price">Su richiesta</div>
-                    <div class="pricing-period">Sottoscrizione personalizzata</div>
-                    <ul class="pricing-features">
-                        <li>Audit illimitati</li>
-                        <li>White-label disponibile</li>
-                        <li>API access</li>
-                        <li>Priority support 24/7</li>
-                        <li>Custom billing</li>
-                    </ul>
-                    <button class="pricing-button">Contattaci</button>
-                </div>
-            </div>
+<!-- PRICING GRID -->
+<div class="pricing-grid">
+
+  <!-- SINGOLO -->
+  <div class="pricing-card">
+    <div class="pricing-header">
+      <h3>Singolo</h3>
+      <p class="pricing-subtitle">Per chi vuole provare</p>
+      <div class="pricing-price">
+        <span class="price-amount">€99</span>
+        <span class="price-period"> una tantum</span>
+      </div>
+      <p class="price-note">1 audit — paghi una volta sola</p>
+    </div>
+    <ul class="pricing-features">
+      <li class="feat-yes">1 audit GEO completo</li>
+      <li class="feat-yes">Report PDF 30-50 pagine</li>
+      <li class="feat-yes">Analisi Claude AI in italiano</li>
+      <li class="feat-yes">Schema JSON-LD generato</li>
+      <li class="feat-yes">llms.txt + robots.txt ottimizzato</li>
+      <li class="feat-yes">Consegna via email in 5 minuti</li>
+    </ul>
+    <button class="btn-pricing" onclick="startCheckout('singolo')">Acquista ora →</button>
+  </div>
+
+  <!-- AGENCY (FEATURED) -->
+  <div class="pricing-card pricing-featured">
+    <div class="pricing-badge">PIÙ SCELTO</div>
+    <div class="pricing-header">
+      <h3>Agency</h3>
+      <p class="pricing-subtitle">Per web agency</p>
+      <div class="pricing-price">
+        <span class="price-amount" id="price-agency">€199</span>
+        <span class="price-period" id="period-agency">/mese</span>
+      </div>
+      <p class="price-note" id="note-agency">50 audit/mese — fatturato mensilmente</p>
+    </div>
+    <ul class="pricing-features">
+      <li class="feat-yes">50 audit/mese</li>
+      <li class="feat-yes">Report PDF 30-50 pagine</li>
+      <li class="feat-yes">Analisi Claude AI in italiano</li>
+      <li class="feat-yes">Schema JSON-LD generato</li>
+      <li class="feat-yes">llms.txt + robots.txt ottimizzato</li>
+      <li class="feat-yes">Consegna via email in 5 minuti</li>
+    </ul>
+    <button class="btn-pricing btn-pricing-featured" onclick="startCheckout('agency')">Abbonati ora →</button>
+  </div>
+
+  <!-- AGENCY PRO -->
+  <div class="pricing-card pricing-xl">
+    <div class="pricing-badge pricing-badge-dark">PRO</div>
+    <div class="pricing-header">
+      <h3>Agency Pro</h3>
+      <p class="pricing-subtitle">Per agenzie ad alto volume</p>
+      <div class="pricing-price">
+        <span class="price-amount" id="price-pro">€499</span>
+        <span class="price-period" id="period-pro">/mese</span>
+      </div>
+      <p class="price-note" id="note-pro">100 audit/mese — fatturato mensilmente</p>
+    </div>
+    <ul class="pricing-features">
+      <li class="feat-yes">100 audit/mese</li>
+      <li class="feat-yes">Report PDF 30-50 pagine</li>
+      <li class="feat-yes">Analisi Claude AI in italiano</li>
+      <li class="feat-yes">Schema JSON-LD generato</li>
+      <li class="feat-yes">llms.txt + robots.txt ottimizzato</li>
+      <li class="feat-yes">Consegna via email in 5 minuti</li>
+    </ul>
+    <button class="btn-pricing" onclick="startCheckout('agency_pro')">Abbonati ora →</button>
+  </div>
+
+</div>
+<p class="pricing-note">
+  * Tutti i piani includono le stesse funzionalità. L'unica differenza è il numero di audit mensili.<br>
+  Nessun contratto — cancelli quando vuoi.
+</p>
         </div>
     </section>
 
@@ -1097,6 +1098,45 @@
                     element.textContent = Math.round(current);
                 }
             }, 30);
+        }
+
+        let isAnnuale = false;
+
+        function toggleBilling() {
+          isAnnuale = !isAnnuale;
+          const toggle = document.getElementById('billingToggle');
+          const labelMensile = document.getElementById('label-mensile');
+          const labelAnnuale = document.getElementById('label-annuale');
+
+          toggle.classList.toggle('active', isAnnuale);
+
+          if (isAnnuale) {
+            labelMensile.style.fontWeight = '400';
+            labelMensile.style.color = '#6b7280';
+            labelAnnuale.style.fontWeight = '700';
+            labelAnnuale.style.color = '#111';
+
+            document.getElementById('price-agency').textContent = '€149';
+            document.getElementById('period-agency').textContent = '/mese';
+            document.getElementById('note-agency').textContent = 'Fatturato annualmente · risparmi €600';
+
+            document.getElementById('price-pro').textContent = '€399';
+            document.getElementById('period-pro').textContent = '/mese';
+            document.getElementById('note-pro').textContent = 'Fatturato annualmente · risparmi €1.200';
+          } else {
+            labelMensile.style.fontWeight = '700';
+            labelMensile.style.color = '#111';
+            labelAnnuale.style.fontWeight = '400';
+            labelAnnuale.style.color = '#6b7280';
+
+            document.getElementById('price-agency').textContent = '€199';
+            document.getElementById('period-agency').textContent = '/mese';
+            document.getElementById('note-agency').textContent = 'Fatturato mensilmente';
+
+            document.getElementById('price-pro').textContent = '€499';
+            document.getElementById('period-pro').textContent = '/mese';
+            document.getElementById('note-pro').textContent = 'Fatturato mensilmente';
+          }
         }
     </script>
 </body>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="utf-8" />
+    <title>GEO Audit Report</title>
+    <style>
+        @page { size: A4; margin: 2cm; }
+        body { font-family: 'Inter', sans-serif; color: #444444; line-height: 1.6; background: #FFFFFF; }
+        h1 { font-family: 'Poppins', sans-serif; color: #F90100; font-size: 24pt; page-break-before: always; }
+        h2 { font-family: 'Poppins', sans-serif; color: #000000; font-size: 18pt; border-bottom: 3px solid #F90100; padding-bottom: 8px; }
+        h3 { font-family: 'Poppins', sans-serif; color: #F90100; font-size: 14pt; }
+        th { background: #F90100; color: #FFFFFF; padding: 10px; }
+        td { padding: 8px; border-bottom: 1px solid #E5E7EB; }
+        tr:nth-child(even) { background: #F8F9FA; }
+        .cover { text-align: center; page-break-after: always; background: linear-gradient(135deg, #000000 0%, #1a1a1a 25%, #F90100 100%); color: #FFFFFF; padding: 40px 0; }
+        .cover h1 { font-size: 48px; margin-bottom: 0; color: #FFFFFF; }
+        .cover .score { font-size: 96px; font-weight: bold; margin: 20px 0; }
+        .cover .tagline { font-size: 14px; color: #FFFFFF; }
+        .summary table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .summary th, .summary td { text-align: left; }
+        .bar { height: 12px; background: #e0e0e0; position: relative; }
+        .bar-inner { height: 100%; }
+        .module-section { page-break-before: always; }
+        .priority { padding: 2px 6px; border-radius: 4px; color: #fff; font-size: 10px; }
+        .priorita-CRITICA { background: #EF4444; }
+        .priorita-ALTA { background: #F97316; }
+        .priorita-MEDIA { background: #F59E0B; }
+        .priorita-BASSA { background: #10B981; }
+        table.action { width: 100%; border-collapse: collapse; }
+        table.action th, table.action td { padding: 6px; }
+        footer { font-size: 10px; text-align: center; position: absolute; bottom: 1cm; width: calc(100% - 4cm); }
+        .page-break { page-break-before: always; }
+        .cta-box { background: linear-gradient(135deg, #F90100, #DC0000); color: #FFFFFF; border-radius: 16px; }
+        .warning-box { background: #FEE2E2; border-left: 4px solid #EF4444; }
+        .action-box { background: #D1FAE5; border-left: 4px solid #10B981; }
+        .ai-box { background: #EDE9FE; border-left: 4px solid #8B5CF6; }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Cover Page -->
+    <div class="cover">
+        <img src="{{ labels.intestazione.powered_by }}" alt="Logo" style="max-width:200px;">
+        <h1>GEO Audit Report</h1>
+        <p>{{ url_sito }}</p>
+        <p>{{ data_analisi }}</p>
+        <p>{{ email_cliente }}</p>
+        <div class="score" style="color: {{ giudizio.colore }};">{{ geo_score }}</div>
+        <div>{{ giudizio.emoji }} {{ giudizio.etichetta }}</div>
+        <div class="tagline">Powered by DigIdentity Agency</div>
+    </div>
+
+    <!-- Executive Summary -->
+    <div class="summary">
+        <h2>Executive Summary</h2>
+        <p>Il GEO Score misura quanto il tuo sito è ottimizzato per essere trovato e citato dalle AI. Più alto è il punteggio, maggiore è la visibilità nelle risposte dirette di ChatGPT, Perplexity, Google AI e simili.</p>
+        <table>
+            <thead><tr><th>Modulo</th><th>Peso</th><th>Score</th><th>Progresso</th></tr></thead>
+            <tbody>
+            {% for key, mod in moduli.items() %}
+            <tr>
+                <td>{{ labels.moduli[key].nome }}</td>
+                <td>{{ labels.moduli[key].peso }}</td>
+                <td>{{ mod.score }}</td>
+                <td>
+                    <div class="bar"><div class="bar-inner" style="{{ calcola_barra(mod.score) }}; background: {{ giudizio.colore }};"></div></div>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <p>Legenda colore score: rosso <30, arancione 31-50, giallo 51-70, verde 71-85, blu >85.</p>
+    </div>
+
+    <!-- Detailed Modules -->
+    {% for key, mod in moduli.items() %}
+    <div class="module-section">
+        <h2>{{ labels.moduli[key].nome }} ({{ mod.score }}/100)</h2>
+        <p>{{ labels.moduli[key].descrizione }}</p>
+        {% if mod.ricariche?? %}{% endif %}
+        {% if mod.score is defined %}
+            <p>Risultati chiave:</p>
+            <ul>
+            {% for campo, val in mod.items() %}
+                {% if campo != 'score' and campo != 'modulo' and campo != 'raccomandazioni' %}
+                    <li>{{ campo }}: {{ val }}</li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+        {% endif %}
+        {% if mod.raccomandazioni %}
+            <h3>Raccomandazioni</h3>
+            <ul>
+            {% for r in mod.raccomandazioni %}
+                <li>{{ r }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+    {% endfor %}
+
+    <!-- Action Plan -->
+    <div class="page-break">
+        <h2>Piano d'Azione</h2>
+        <table class="action">
+            <thead><tr><th>Priorità</th><th>Problema</th><th>Azione</th><th>Impatto</th></tr></thead>
+            <tbody>
+            {% for item in priorita %}
+            <tr>
+                <td><span class="priority priorita-{{ item.priorita }}">{{ item.priorita }}</span></td>
+                <td>{{ item.problema }}</td>
+                <td>{{ item.azione }}</td>
+                <td>{{ item.impatto_stimato }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <img src="{{ labels.intestazione.powered_by }}" alt="Logo" style="height:20px; vertical-align:middle;">
+        GEO Audit Italia — by DigIdentity Agency | pagina {{ page }}
+    </footer>
+</body>
+</html>

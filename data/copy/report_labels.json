@@ -4,6 +4,7 @@
     "sottotitolo": "Analisi di Visibilità AI — Generative Engine Optimization",
     "prodotto": "GEO Audit Italia",
     "powered_by": "Powered by DigIdentity Agency",
+    "tagline": "AI & Automazioni per la Tua Impresa",
     "data_label": "Data analisi",
     "sito_analizzato": "Sito analizzato",
     "piano": "Piano"
@@ -62,10 +63,12 @@
     }
   },
   "footer": {
-    "disclaimer": "Questo report è generato automaticamente da GEO Audit Italia. I dati sono aggiornati alla data dell'analisi. Per una consulenza approfondita contatta DigIdentity Agency.",
+    "disclaimer": "Questo report è generato automaticamente da GEO Audit Italia. I dati sono aggiornati alla data dell'analisi. Per una consulenza personalizzata contatta DigIdentity Agency.",
     "contatto": "info@digidentityagency.it",
+    "telefono": "+39 392 199 0215",
     "sito": "https://digidentityagency.it",
-    "copyright": "© DigIdentity Agency — Tutti i diritti riservati"
+    "indirizzo": "Via Dettori 3, 09020 Samatzai (SU), Sardegna",
+    "copyright": "© 2026 DigIdentity Agency — Tutti i diritti riservati"
   },
   "crawler_ai": {
     "GPTBot": "OpenAI / ChatGPT",

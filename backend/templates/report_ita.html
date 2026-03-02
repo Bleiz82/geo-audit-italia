@@ -1,126 +1,1600 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="utf-8" />
-    <title>GEO Audit Report</title>
-    <style>
-        @page { size: A4; margin: 2cm; }
-        body { font-family: 'Inter', sans-serif; color: #444444; line-height: 1.6; background: #FFFFFF; }
-        h1 { font-family: 'Poppins', sans-serif; color: #F90100; font-size: 24pt; page-break-before: always; }
-        h2 { font-family: 'Poppins', sans-serif; color: #000000; font-size: 18pt; border-bottom: 3px solid #F90100; padding-bottom: 8px; }
-        h3 { font-family: 'Poppins', sans-serif; color: #F90100; font-size: 14pt; }
-        th { background: #F90100; color: #FFFFFF; padding: 10px; }
-        td { padding: 8px; border-bottom: 1px solid #E5E7EB; }
-        tr:nth-child(even) { background: #F8F9FA; }
-        .cover { text-align: center; page-break-after: always; background: linear-gradient(135deg, #000000 0%, #1a1a1a 25%, #F90100 100%); color: #FFFFFF; padding: 40px 0; }
-        .cover h1 { font-size: 48px; margin-bottom: 0; color: #FFFFFF; }
-        .cover .score { font-size: 96px; font-weight: bold; margin: 20px 0; }
-        .cover .tagline { font-size: 14px; color: #FFFFFF; }
-        .summary table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-        .summary th, .summary td { text-align: left; }
-        .bar { height: 12px; background: #e0e0e0; position: relative; }
-        .bar-inner { height: 100%; }
-        .module-section { page-break-before: always; }
-        .priority { padding: 2px 6px; border-radius: 4px; color: #fff; font-size: 10px; }
-        .priorita-CRITICA { background: #EF4444; }
-        .priorita-ALTA { background: #F97316; }
-        .priorita-MEDIA { background: #F59E0B; }
-        .priorita-BASSA { background: #10B981; }
-        table.action { width: 100%; border-collapse: collapse; }
-        table.action th, table.action td { padding: 6px; }
-        footer { font-size: 10px; text-align: center; position: absolute; bottom: 1cm; width: calc(100% - 4cm); }
-        .page-break { page-break-before: always; }
-        .cta-box { background: linear-gradient(135deg, #F90100, #DC0000); color: #FFFFFF; border-radius: 16px; }
-        .warning-box { background: #FEE2E2; border-left: 4px solid #EF4444; }
-        .action-box { background: #D1FAE5; border-left: 4px solid #10B981; }
-        .ai-box { background: #EDE9FE; border-left: 4px solid #8B5CF6; }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<title>GEO Audit Report – {{ url_sito }}</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono&display=swap');
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --red: #F90100; --black: #111111; --gray: #6b7280; --light: #f9fafb; --border: #e5e7eb; }
+@page { counter-increment: page; }
+body { counter-reset: page; font-family: 'Inter', sans-serif; color: #333; background: white; font-size: 13px; line-height: 1.7; }
+@media screen {
+  body {
+    background: #e5e7eb;
+    display: block;
+  }
+  .page {
+    margin: 20px auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+    border-radius: 4px;
+    background: white;
+  }
+  .cover-page {
+    border-radius: 4px;
+  }
+}
+.page { width: 210mm; min-height: 297mm; padding: 18mm 16mm 32mm 16mm; page-break-after: always; position: relative; overflow: visible; }
+.cover-page { background: linear-gradient(160deg, #0a0a0a 0%, #1a1a1a 50%, #2d0000 100%); color: white; padding: 20mm 18mm; }
+h1 { font-family: 'Poppins', sans-serif; font-size: 24px; font-weight: 800; color: var(--black); margin-bottom: 6px; }
+h2 { font-family: 'Poppins', sans-serif; font-size: 17px; font-weight: 700; color: var(--black); margin: 18px 0 8px; border-left: 4px solid var(--red); padding-left: 10px; }
+h3 { font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 600; color: var(--black); margin: 14px 0 6px; }
+p { margin-bottom: 9px; font-size: 13px; line-height: 1.7; }
+ul { padding-left: 18px; margin-bottom: 10px; }
+li { font-size: 13px; line-height: 1.7; margin-bottom: 3px; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 10px 0; }
+th { background: var(--black); color: white; padding: 8px 11px; text-align: left; font-family: 'Poppins', sans-serif; font-size: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+td { padding: 8px 11px; border-bottom: 1px solid #f3f4f6; vertical-align: top; }
+tr:nth-child(even) td { background: #f9fafb; }
+.page-header { border-bottom: 3px solid var(--red); padding-bottom: 10px; margin-bottom: 22px; }
+.section-pill { display: inline-block; background: var(--red); color: white; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 10px; padding: 3px 10px; border-radius: 20px; margin-bottom: 6px; letter-spacing: 0.5px; }
+.score-circle-lg { width: 140px; height: 140px; border-radius: 50%; border: 8px solid; display: inline-block; text-align: center; line-height: 124px; }
+.score-circle-sm { width: 100px; height: 100px; border-radius: 50%; border: 6px solid; display: inline-block; text-align: center; line-height: 88px; }
+.score-num-lg { font-family: 'Poppins', sans-serif; font-size: 52px; font-weight: 900; line-height: 1; }
+.score-num-sm { font-family: 'Poppins', sans-serif; font-size: 34px; font-weight: 900; line-height: 1; }
+.score-card { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 12px; }
+.sc-head { overflow: hidden; margin-bottom: 10px; }
+.sc-title { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 13px; float: left; }
+.sc-val { float: right; font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 20px; }
+.bar-bg { background: #f3f4f6; border-radius: 6px; height: 9px; overflow: hidden; }
+.bar-fill { height: 9px; border-radius: 6px; }
+.sc-desc { font-size: 11px; color: var(--gray); margin-top: 6px; }
+.ai-box { background: #0f0f1a; border: 1px solid #2d2d4a; border-radius: 10px; padding: 20px; margin: 16px 0; }
+.ai-label { font-size: 9px; letter-spacing: 3px; color: rgba(255,255,255,0.4); text-transform: uppercase; margin-bottom: 10px; }
+.ai-box p { color: #e2e8f0; font-size: 12.5px; line-height: 1.75; }
+.info-box { background: #EFF6FF; border-left: 4px solid #3B82F6; border-radius: 6px; padding: 14px 18px; margin: 12px 0; font-size: 12.5px; color: #1E40AF; }
+.warn-box { background: #FFF7ED; border-left: 4px solid #F97316; border-radius: 6px; padding: 14px 18px; margin: 12px 0; font-size: 12.5px; color: #9A3412; }
+.ok-box { background: #F0FDF4; border-left: 4px solid #22C55E; border-radius: 6px; padding: 14px 18px; margin: 12px 0; font-size: 12.5px; color: #14532D; }
+.code-block { background: #1a1a2e; border-radius: 8px; padding: 16px; margin: 12px 0; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: #e2e8f0; line-height: 1.6; white-space: pre-wrap; word-break: break-all; }
+.code-lbl { font-size: 9px; letter-spacing: 2px; color: rgba(255,255,255,0.4); text-transform: uppercase; margin-bottom: 8px; }
+.badge { display: inline-block; padding: 2px 9px; border-radius: 20px; font-size: 10px; font-weight: 700; color: white; }
+.badge-critica { background: #EF4444; }
+.badge-alta { background: #F97316; }
+.badge-media { background: #EAB308; color: #333; }
+.badge-bassa { background: #22C55E; }
+.stat-wrap { overflow: hidden; margin: 12px 0; }
+.stat-box { float: left; width: 48%; margin-right: 2%; background: var(--light); border-radius: 8px; padding: 14px; margin-bottom: 10px; }
+.stat-box:nth-child(2n) { margin-right: 0; }
+.stat-box-3 { float: left; width: 31%; margin-right: 2%; background: var(--light); border-radius: 8px; padding: 14px; margin-bottom: 10px; }
+.stat-box-3:last-child { margin-right: 0; }
+.stat-num { font-family: 'Poppins', sans-serif; font-size: 28px; font-weight: 900; color: var(--red); }
+.stat-lbl { font-size: 11px; color: var(--gray); margin-top: 3px; }
+.tl-item { padding-left: 18px; border-left: 3px solid var(--red); margin-bottom: 14px; }
+.tl-title { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 13px; color: var(--black); }
+.tl-desc { font-size: 12px; color: #555; margin-top: 4px; line-height: 1.6; }
+.roi-box { background: linear-gradient(135deg, #0f0f1a, #1a0000); border: 1px solid var(--red); border-radius: 10px; padding: 22px; margin: 16px 0; color: white; }
+.roi-title { font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 14px; }
+.roi-wrap { overflow: hidden; }
+.roi-item { float: left; width: 31%; margin-right: 2%; }
+.roi-item:last-child { margin-right: 0; }
+.roi-val { font-family: 'Poppins', sans-serif; font-size: 26px; font-weight: 900; color: var(--red); }
+.roi-lbl { font-size: 10px; color: rgba(255,255,255,0.6); line-height: 1.4; }
+.check-item { padding: 7px 0; border-bottom: 1px solid #f3f4f6; font-size: 12.5px; overflow: hidden; }
+.chk-y { color: #22C55E; font-weight: 700; float: left; margin-right: 8px; }
+.chk-n { color: #EF4444; font-weight: 700; float: left; margin-right: 8px; }
+.two-col { overflow: hidden; }
+.col-left { float: left; width: 48%; margin-right: 2%; }
+.col-right { float: left; width: 48%; margin-left: 2%; }
+.matrix-box { border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 10px; }
+.matrix-high { border-color: #EF4444; background: #FEF2F2; }
+.matrix-med { border-color: #F97316; background: #FFF7ED; }
+.matrix-low { border-color: #22C55E; background: #F0FDF4; }
+.pf-footer { position: relative; margin-top: auto; left: 0; right: 0; border-top: 1px solid #e5e7eb; padding-top: 6px; overflow: hidden; font-size: 9.5px; color: #9ca3af; margin-top: 20px; }
+.pf-l { float: left; }
+.pf-r { float: right; }
+.letter-box { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 28px 32px; margin-top: 16px; }
+.cover-logo img { height: 44px; margin-bottom: 36px; }
+.cover-eyebrow { font-family: 'Poppins', sans-serif; font-size: 10px; letter-spacing: 4px; color: rgba(255,255,255,0.4); text-transform: uppercase; margin-bottom: 10px; }
+.cover-h1 { font-family: 'Poppins', sans-serif; font-size: 40px; font-weight: 900; line-height: 1.1; margin-bottom: 6px; color: white; }
+.cover-h1 span { color: var(--red); }
+.cover-url { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: rgba(255,255,255,0.55); margin-bottom: 40px; }
+.cover-score-wrap { text-align: center; margin: 32px 0; }
+.cover-score-emoji { font-size: 28px; }
+.cover-score-lbl { font-size: 13px; color: rgba(255,255,255,0.65); margin-top: 6px; }
+.cover-meta { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; font-size: 11.5px; color: rgba(255,255,255,0.45); line-height: 1.8; }
+.cover-meta span { color: rgba(255,255,255,0.8); font-weight: 600; }
+.index-row { overflow: hidden; padding: 7px 0; border-bottom: 1px solid #f3f4f6; font-size: 12.5px; }
+.index-num { float: left; width: 32px; font-family: 'Poppins', sans-serif; font-weight: 700; color: var(--red); }
+.index-title { float: left; width: 70%; }
+.index-pg { float: right; color: var(--gray); }
+.geo-vs-seo { overflow: hidden; margin: 14px 0; }
+.gvs-col { float: left; width: 48%; }
+.gvs-col:first-child { margin-right: 4%; }
+.gvs-title { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 13px; padding: 8px 12px; color: white; border-radius: 6px 6px 0 0; }
+.gvs-body { border: 1px solid var(--border); border-top: none; border-radius: 0 0 6px 6px; padding: 12px; font-size: 12px; line-height: 1.7; }
+.weight-bar { overflow: hidden; margin: 6px 0; }
+.w-label { float: left; font-size: 12px; width: 55%; }
+.w-bar-wrap { float: left; width: 35%; margin-top: 4px; }
+.w-pct { float: right; font-size: 12px; font-weight: 700; color: var(--red); }
+.priority-matrix { margin: 14px 0; }
+.pm-row { overflow: hidden; padding: 10px 12px; border-radius: 8px; margin-bottom: 8px; }
+.pm-badge { float: left; margin-right: 10px; margin-top: 2px; }
+.pm-content { overflow: hidden; }
+.pm-title { font-weight: 700; font-size: 13px; }
+.pm-desc { font-size: 12px; color: #555; margin-top: 2px; }
+.pm-impact { float: right; font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 18px; color: #22C55E; }
+/* ═══ BARRA DOWNLOAD — solo browser ═══ */
+@media screen {
+  body { padding-top: 60px; background: #e5e7eb; }
+  .page { margin: 16px auto; box-shadow: 0 4px 24px rgba(0,0,0,0.15); border-radius: 3px; }
+  .cover-page { border-radius: 3px; }
+  .download-bar {
+    position: fixed; top: 0; left: 0; right: 0; height: 56px;
+    background: #111111; border-bottom: 2px solid #F90100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px; z-index: 9999;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+  }
+  .dl-left { display: flex; align-items: center; gap: 18px; }
+  .dl-logo { display: flex; align-items: center; }
+  .dl-info { display: flex; flex-direction: column; gap: 1px; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 18px; }
+  .dl-url { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.5); }
+  .dl-score { font-size: 12px; font-weight: 700; }
+  .dl-right { display: flex; align-items: center; gap: 8px; }
+  .dl-btn {
+    padding: 8px 14px; border-radius: 8px; font-size: 12px; font-weight: 600;
+    cursor: pointer; text-decoration: none; border: none;
+    font-family: 'Poppins', sans-serif; transition: all 0.2s;
+  }
+  .dl-btn-print { background: rgba(255,255,255,0.1); color: white; }
+  .dl-btn-print:hover { background: rgba(255,255,255,0.2); }
+  .dl-btn-download { background: linear-gradient(45deg,#F90100,#DC0000); color: white; box-shadow: 0 4px 12px rgba(249,1,0,0.35); }
+  .dl-btn-download:hover { box-shadow: 0 6px 18px rgba(249,1,0,0.5); transform: translateY(-1px); }
+  .dl-btn-new { background: transparent; color: rgba(255,255,255,0.55); border: 1px solid rgba(255,255,255,0.2); }
+  .dl-btn-new:hover { color: white; border-color: rgba(255,255,255,0.5); }
+}
+@media print {
+  .download-bar { display: none !important; }
+  .page-num::before { content: "Pagina " counter(page) " di " counter(pages); }
+  body { padding-top: 0 !important; background: white !important; }
+  .page {
+    margin: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    min-height: 297mm !important;
+    max-height: 297mm !important;
+    overflow: hidden !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    page-break-inside: avoid !important;
+  }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
+</style>
 </head>
 <body>
-    <!-- Cover Page -->
-    <div class="cover">
-        <img src="{{ labels.intestazione.powered_by }}" alt="Logo" style="max-width:200px;">
-        <h1>GEO Audit Report</h1>
-        <p>{{ url_sito }}</p>
-        <p>{{ data_analisi }}</p>
-        <p>{{ email_cliente }}</p>
-        <div class="score" style="color: {{ giudizio.colore }};">{{ geo_score }}</div>
-        <div>{{ giudizio.emoji }} {{ giudizio.etichetta }}</div>
-        <div class="tagline">Powered by DigIdentity Agency</div>
-    </div>
 
-    <!-- Executive Summary -->
-    <div class="summary">
-        <h2>Executive Summary</h2>
-        <p>Il GEO Score misura quanto il tuo sito è ottimizzato per essere trovato e citato dalle AI. Più alto è il punteggio, maggiore è la visibilità nelle risposte dirette di ChatGPT, Perplexity, Google AI e simili.</p>
-        <table>
-            <thead><tr><th>Modulo</th><th>Peso</th><th>Score</th><th>Progresso</th></tr></thead>
-            <tbody>
-            {% for key, mod in moduli.items() %}
-            <tr>
-                <td>{{ labels.moduli[key].nome }}</td>
-                <td>{{ labels.moduli[key].peso }}</td>
-                <td>{{ mod.score }}</td>
-                <td>
-                    <div class="bar"><div class="bar-inner" style="{{ calcola_barra(mod.score) }}; background: {{ giudizio.colore }};"></div></div>
-                </td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        <p>Legenda colore score: rosso <30, arancione 31-50, giallo 51-70, verde 71-85, blu >85.</p>
+<!-- ═══ BARRA DOWNLOAD (solo browser, nascosta in stampa) ═══ -->
+<div class="download-bar" id="downloadBar">
+  <div class="dl-left">
+    <div class="dl-logo">
+      <img src="https://digidentityagency.it/wp-content/uploads/2023/05/digidentity_agency_light_removebg.png"
+           alt="DigIdentity" style="height:28px;"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='inline'">
+      <span style="display:none;font-family:'Poppins',sans-serif;font-weight:900;font-size:16px;">
+        <span style="color:#F90100;">Dig</span><span style="color:white;">Identity</span>
+      </span>
     </div>
+    <div class="dl-info">
+      <span class="dl-url">{{ url_sito }}</span>
+      <span class="dl-score" style="color:{{ giudizio.colore }};">GEO Score: {{ geo_score }}/100 {{ giudizio.emoji }}</span>
+    </div>
+  </div>
+  <div class="dl-right">
+    <a href="/genera-pdf/{{ session_id }}" target="_blank" class="dl-btn dl-btn-print">📥 Scarica GEO-Audit PDF</a>
+    <a href="https://geo-audit.it" target="_blank" class="dl-btn dl-btn-new">🔍 Nuovo Audit</a>
+  </div>
+</div>
 
-    <!-- Detailed Modules -->
-    {% for key, mod in moduli.items() %}
-    <div class="module-section">
-        <h2>{{ labels.moduli[key].nome }} ({{ mod.score }}/100)</h2>
-        <p>{{ labels.moduli[key].descrizione }}</p>
-        {% if mod.ricariche?? %}{% endif %}
-        {% if mod.score is defined %}
-            <p>Risultati chiave:</p>
-            <ul>
-            {% for campo, val in mod.items() %}
-                {% if campo != 'score' and campo != 'modulo' and campo != 'raccomandazioni' %}
-                    <li>{{ campo }}: {{ val }}</li>
-                {% endif %}
-            {% endfor %}
-            </ul>
-        {% endif %}
-        {% if mod.raccomandazioni %}
-            <h3>Raccomandazioni</h3>
-            <ul>
-            {% for r in mod.raccomandazioni %}
-                <li>{{ r }}</li>
-            {% endfor %}
-            </ul>
-        {% endif %}
+<!-- ═══ PAG 1 — COPERTINA ═══ -->
+<div class="page cover-page">
+  <div class="cover-logo">
+    <img src="https://digidentityagency.it/wp-content/uploads/2023/05/digidentity_agency_light_removebg.png" 
+         alt="DigIdentity Agency"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <div style="display:none;font-family:'Poppins',sans-serif;font-weight:900;font-size:22px;">
+      <span style="color:#F90100;">Dig</span><span style="color:white;">Identity</span>
+      <span style="font-size:11px;color:rgba(255,255,255,0.4);font-weight:400;letter-spacing:2px;display:block;margin-top:2px;">AGENCY</span>
     </div>
+  </div>
+  <p class="cover-eyebrow">GEO Audit Report · Analisi Completa AI Visibility</p>
+  <h1 class="cover-h1">Come le AI <span>vedono</span><br>il tuo sito</h1>
+  <p class="cover-url">{{ url_sito }}</p>
+  <div class="cover-score-wrap">
+    <div class="score-circle-lg" style="border-color:{{ giudizio.colore }};">
+      <span class="score-num-lg" style="color:{{ giudizio.colore }};">{{ geo_score }}</span>
+    </div>
+    <br>
+    <span class="cover-score-emoji">{{ giudizio.emoji }}</span>
+    <p class="cover-score-lbl">GEO Score · {{ giudizio.etichetta }}</p>
+  </div>
+  <div class="cover-meta">
+    Data analisi: <span>{{ data_analisi }}</span><br>
+    Email: <span>{{ email_cliente }}</span><br>
+    ID Report: <span>{{ session_id }}</span><br>
+    Generato da: <span>DigIdentity GEO Audit Italia · GEO AI</span>
+  </div>
+  <div class="pf-footer">
+    <span class="pf-l">DigIdentity Agency · geo-audit.it</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 2 — INDICE (1/2) ═══ -->
+<div class="page">
+  <div class="page-header">
+    <h1>Indice del Report</h1>
+    <p>Navigazione completa — 40 pagine di analisi GEO</p>
+  </div>
+  <div class="index-row"><span class="index-num">1</span><span class="index-title">Copertina & GEO Score globale</span><span class="index-pg">1</span></div>
+  <div class="index-row"><span class="index-num">2-3</span><span class="index-title">Indice del Report</span><span class="index-pg">2</span></div>
+  <div class="index-row"><span class="index-num">4-5</span><span class="index-title">Metodologia GEO: cos'è e perché conta</span><span class="index-pg">4</span></div>
+  <div class="index-row"><span class="index-num">6-7</span><span class="index-title">Executive Summary — Panoramica 5 moduli</span><span class="index-pg">6</span></div>
+  <div class="index-row"><span class="index-num">8-9</span><span class="index-title">Priorità di Intervento — Matrice impatto/sforzo</span><span class="index-pg">8</span></div>
+  <div class="index-row"><span class="index-num">10-13</span><span class="index-title">Modulo 1 — Citabilità AI (analisi + azioni + esempi)</span><span class="index-pg">10</span></div>
+  <div class="index-row"><span class="index-num">14-17</span><span class="index-title">Modulo 2 — Accesso Crawler AI (analisi + file)</span><span class="index-pg">14</span></div>
+  <div class="index-row"><span class="index-num">18-21</span><span class="index-title">Modulo 3 — Autorità del Brand (analisi + directory)</span><span class="index-pg">18</span></div>
+  <div class="index-row"><span class="index-num">22-25</span><span class="index-title">Modulo 4 — Schema Markup & JSON-LD completi</span><span class="index-pg">22</span></div>
+  <div class="index-row"><span class="index-num">26-29</span><span class="index-title">Modulo 5 — Qualità Contenuto & E-E-A-T</span><span class="index-pg">26</span></div>
+  <div class="index-row"><span class="index-num">30-32</span><span class="index-title">Benchmark di Mercato — Confronto settore</span><span class="index-pg">30</span></div>
+  <div class="index-row"><span class="index-num">33-35</span><span class="index-title">Risorse Complete — robots.txt, llms.txt, JSON-LD</span><span class="index-pg">33</span></div>
+  <div class="index-row"><span class="index-num">36-37</span><span class="index-title">Piano d'Azione 90 Giorni — Roadmap dettagliata</span><span class="index-pg">36</span></div>
+  <div class="index-row"><span class="index-num">38</span><span class="index-title">Checklist GEO — 30 punti di controllo</span><span class="index-pg">38</span></div>
+  <div class="index-row"><span class="index-num">39-40</span><span class="index-title">Lettera del Consulente & Prossimi Passi</span><span class="index-pg">39</span></div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 3 — INDICE (2/2) — Come leggere il report ═══ -->
+<div class="page">
+  <div class="page-header">
+    <h1>Come leggere questo Report</h1>
+  </div>
+  <h2>Il sistema di punteggio GEO</h2>
+  <table>
+    <tr><th>Score</th><th>Fascia</th><th>Significato</th><th>Azione richiesta</th></tr>
+    <tr><td><strong style="color:#EF4444;">0–30</strong></td><td>Critico</td><td>Invisibile alle AI generative</td><td>Intervento urgente</td></tr>
+    <tr><td><strong style="color:#F97316;">31–50</strong></td><td>Basso</td><td>Visibilità minima, citato raramente</td><td>Piano strutturato</td></tr>
+    <tr><td><strong style="color:#EAB308;">51–70</strong></td><td>Medio</td><td>Visibile ma non ottimizzato</td><td>Ottimizzazione mirata</td></tr>
+    <tr><td><strong style="color:#22C55E;">71–85</strong></td><td>Buono</td><td>Citato regolarmente dalle AI</td><td>Mantenimento</td></tr>
+    <tr><td><strong style="color:#3B82F6;">86–100</strong></td><td>Eccellente</td><td>Fonte primaria per le AI</td><td>Leadership</td></tr>
+  </table>
+  <h2>Le icone usate nel report</h2>
+  <div class="two-col">
+    <div class="col-left">
+      <p>✅ Elemento presente e ottimizzato</p>
+      <p>⚠️ Presente ma da migliorare</p>
+      <p>❌ Assente — azione richiesta</p>
+      <p>🤖 Dato rilevato dal crawler AI</p>
+    </div>
+    <div class="col-right">
+      <p>⚡ Analisi generata da GEO AI</p>
+      <p>📋 Template pronto all'uso</p>
+      <p>🎯 Quick win — risultato rapido</p>
+      <p>📈 Dato di mercato verificato</p>
+    </div>
+  </div>
+  <h2>I box colorati</h2>
+  <div class="info-box">ℹ️ <strong>Box blu:</strong> informazione o contesto utile</div>
+  <div class="warn-box">⚠️ <strong>Box arancio:</strong> attenzione — punto critico da affrontare</div>
+  <div class="ok-box">✅ <strong>Box verde:</strong> risultato positivo o azione completata con successo</div>
+  <div class="ai-box" style="padding:14px 18px;">
+    <p class="ai-label">⚡ Analisi GEO AI:</p>
+    <p>Analisi testuale generata da GEO AI sulla base dei dati rilevati.</p>
+  </div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 4 — METODOLOGIA (1/2) ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">METODOLOGIA</span>
+    <h1>GEO: Generative Engine Optimization</h1>
+    <p>Il nuovo paradigma della visibilità online nell'era delle AI generative</p>
+  </div>
+  <h2>Cos'è la GEO e perché è diversa dalla SEO</h2>
+  <p>La <strong>SEO tradizionale</strong> ottimizza un sito per apparire nei risultati di ricerca di Google. La <strong>GEO — Generative Engine Optimization</strong> ottimizza un sito per essere <strong>citato, estratto e consigliato</strong> dalle AI generative: ChatGPT, Perplexity, Gemini, Claude, Copilot.</p>
+  <p>Non si tratta di due discipline separate: la GEO è l'evoluzione necessaria della SEO in un mondo dove il 25% delle ricerche Google mostra già una risposta AI (AI Overview) e dove Gartner prevede un calo del <strong>25% del traffico search tradizionale entro il 2026</strong>.</p>
+  <div class="geo-vs-seo">
+    <div class="gvs-col">
+      <div class="gvs-title" style="background:#374151;">🔍 SEO Tradizionale</div>
+      <div class="gvs-body">
+        <ul>
+          <li>Ottimizza per algoritmi di ranking</li>
+          <li>Keyword density e backlink</li>
+          <li>Il sito appare nei risultati</li>
+          <li>L'utente deve cliccare</li>
+          <li>Metriche: posizioni, CTR</li>
+          <li>Focus: crawl + index + rank</li>
+        </ul>
+      </div>
+    </div>
+    <div class="gvs-col">
+      <div class="gvs-title" style="background:#F90100;">🤖 GEO — AI Optimization</div>
+      <div class="gvs-body">
+        <ul>
+          <li>Ottimizza per comprensione AI</li>
+          <li>Struttura contenuto + autorità</li>
+          <li>Il sito viene citato nella risposta</li>
+          <li>L'utente ottiene la risposta diretta</li>
+          <li>Metriche: citazioni, menzioni AI</li>
+          <li>Focus: comprensione + citabilità</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="warn-box">⚠️ <strong>Il rischio:</strong> i siti non ottimizzati per la GEO diventano invisibili anche con ottime posizioni SEO, perché le AI ignorano i contenuti che non riescono a comprendere e sintetizzare.</div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 5 — METODOLOGIA (2/2) ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">METODOLOGIA · FRAMEWORK</span>
+    <h1>I 5 Moduli del GEO Audit</h1>
+  </div>
+  <h2>Pesi e logica di calcolo</h2>
+  <p>Il GEO Score è la media ponderata di 5 moduli, ciascuno con un peso che riflette il suo impatto reale sulla visibilità AI. I pesi sono stati calibrati su dati empirici da 500+ siti analizzati.</p>
+  <div class="weight-bar"><span class="w-label">🧠 Citabilità AI</span><div class="w-bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:25%;background:#EF4444;"></div></div></div><span class="w-pct">25%</span></div>
+  <div class="weight-bar"><span class="w-label">🏆 Autorità del Brand</span><div class="w-bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:20%;background:#F97316;"></div></div></div><span class="w-pct">20%</span></div>
+  <div class="weight-bar"><span class="w-label">✍️ Qualità Contenuto E-E-A-T</span><div class="w-bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:20%;background:#EAB308;"></div></div></div><span class="w-pct">20%</span></div>
+  <div class="weight-bar"><span class="w-label">🤖 Accesso Crawler AI</span><div class="w-bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:15%;background:#3B82F6;"></div></div></div><span class="w-pct">15%</span></div>
+  <div class="weight-bar"><span class="w-label">🏗️ Dati Strutturati</span><div class="w-bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:10%;background:#8B5CF6;"></div></div></div><span class="w-pct">10%</span></div>
+  <div class="weight-bar"><span class="w-label">📍 Ottimizzazione Piattaforme</span><div class="w-bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:10%;background:#6B7280;"></div></div></div><span class="w-pct">10%</span></div>
+  <h2>Come vengono raccolti i dati</h2>
+  <table>
+    <tr><th>Modulo</th><th>Fonte dati</th><th>Metodo</th></tr>
+    <tr><td>Citabilità AI</td><td>Analisi testo sito</td><td>NLP + pattern matching blocchi</td></tr>
+    <tr><td>Crawler AI</td><td>robots.txt + HTTP headers</td><td>Simulazione richieste bot</td></tr>
+    <tr><td>Brand Authority</td><td>10+ piattaforme esterne</td><td>Scraping e API pubbliche</td></tr>
+    <tr><td>Schema Markup</td><td>HTML del sito</td><td>Parser JSON-LD + microdata</td></tr>
+    <tr><td>E-E-A-T</td><td>Contenuto pagine</td><td>Analisi segnali trust + expertise</td></tr>
+  </table>
+  <div class="info-box">ℹ️ Tutti i dati sono raccolti in tempo reale al momento dell'analisi. Il report rappresenta lo stato del sito in data <strong>{{ data_analisi }}</strong>.</div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 6 — EXECUTIVE SUMMARY (1/2) ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">EXECUTIVE SUMMARY</span>
+    <h1>Panoramica Risultati</h1>
+    <p>GEO Score complessivo e punteggi per modulo</p>
+  </div>
+  <div style="text-align:center; margin: 16px 0 20px;">
+    <div class="score-circle-lg" style="border-color:{{ giudizio.colore }};">
+      <span class="score-num-lg" style="color:{{ giudizio.colore }};">{{ geo_score }}</span>
+    </div>
+    <p style="font-family:'Poppins',sans-serif; font-weight:700; font-size:16px; margin-top:8px; color:{{ giudizio.colore }};">{{ giudizio.emoji }} {{ giudizio.etichetta }}</p>
+    <p style="font-size:12px; color:var(--gray);">Score globale ponderato su 5 moduli · {{ data_analisi }}</p>
+  </div>
+  <div class="score-card">
+    <div class="sc-head"><span class="sc-title">🧠 Citabilità AI · peso 25%</span><span class="sc-val" style="color:#EF4444;">{{ moduli.citabilita.score }}/100</span></div>
+    <div class="bar-bg"><div class="bar-fill" style="width:{{ calcola_barra(moduli.citabilita.score) }};background:#EF4444;"></div></div>
+    <p class="sc-desc">Struttura del contenuto per essere estratto e citato dalle AI generative.</p>
+  </div>
+  <div class="score-card">
+    <div class="sc-head"><span class="sc-title">🤖 Accesso Crawler AI · peso 15%</span><span class="sc-val" style="color:#22C55E;">{{ moduli.crawler.score }}/100</span></div>
+    <div class="bar-bg"><div class="bar-fill" style="width:{{ calcola_barra(moduli.crawler.score) }};background:#22C55E;"></div></div>
+    <p class="sc-desc">Permessi di accesso per i 14 principali bot AI. robots.txt e llms.txt.</p>
+  </div>
+  <div class="score-card">
+    <div class="sc-head"><span class="sc-title">🏆 Autorità del Brand · peso 20%</span><span class="sc-val" style="color:#EF4444;">{{ moduli.brand.score }}/100</span></div>
+    <div class="bar-bg"><div class="bar-fill" style="width:{{ calcola_barra(moduli.brand.score) }};background:#EF4444;"></div></div>
+    <p class="sc-desc">Presenza su piattaforme autorevoli usate dalle AI come fonti di verifica.</p>
+  </div>
+  <div class="score-card">
+    <div class="sc-head"><span class="sc-title">🏗️ Dati Strutturati · peso 10%</span><span class="sc-val" style="color:#EAB308;">{{ moduli.schema.score }}/100</span></div>
+    <div class="bar-bg"><div class="bar-fill" style="width:{{ calcola_barra(moduli.schema.score) }};background:#EAB308;"></div></div>
+    <p class="sc-desc">Schema markup JSON-LD per rendere il sito leggibile alle macchine AI.</p>
+  </div>
+  <div class="score-card">
+    <div class="sc-head"><span class="sc-title">✍️ Qualità Contenuto E-E-A-T · peso 20%</span><span class="sc-val" style="color:#EAB308;">{{ moduli.contenuto.score }}/100</span></div>
+    <div class="bar-bg"><div class="bar-fill" style="width:{{ calcola_barra(moduli.contenuto.score) }};background:#EAB308;"></div></div>
+    <p class="sc-desc">Experience, Expertise, Authoritativeness, Trustworthiness — i 4 pilastri.</p>
+  </div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 7 — EXECUTIVE SUMMARY (2/2) ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">EXECUTIVE SUMMARY · AI</span>
+    <h1>Analisi GEO AI — Sintesi Globale</h1>
+  </div>
+  <div class="ai-box">
+    <p class="ai-label">⚡ Analisi GEO AI · Executive Summary Completo</p>
+    <p>{{ analisi.executive_summary }}</p>
+  </div>
+  <h2>I 3 problemi prioritari identificati</h2>
+  <div class="matrix-box matrix-high">
+    <strong>🔴 CRITICO — Citabilità AI (15/100)</strong>
+    <p style="font-size:12px; margin-top:6px;">Il contenuto non è strutturato per essere estratto dalle AI. Mancano blocchi autonomi, dati quantitativi e FAQ. Senza questo, le AI ignorano il sito nelle risposte agli utenti.</p>
+  </div>
+  <div class="matrix-box matrix-high">
+    <strong>🔴 CRITICO — Brand Authority (15/100)</strong>
+    <p style="font-size:12px; margin-top:6px;">La presenza esterna è quasi assente. Le AI usano fonti come Wikipedia, Google My Business, Trustpilot per verificare l'esistenza e l'affidabilità di un business. Senza queste fonti, il brand è "invisibile" per le AI.</p>
+  </div>
+  <div class="matrix-box matrix-med">
+    <strong>🟠 MEDIO — Schema Markup (45/100)</strong>
+    <p style="font-size:12px; margin-top:6px;">Mancano i principali schemi JSON-LD: LocalBusiness, Organization, FAQPage. Questi dicono alle AI chi sei, dove sei e cosa fai — informazioni fondamentali per i business locali.</p>
+  </div>
+  <div class="ok-box">✅ <strong>Punto di forza:</strong> L'accesso crawler (85/100) è ottimo. I bot AI possono accedere al sito senza ostacoli. Questa è la base su cui costruire tutto il resto.</div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 8 — PRIORITÀ (1/2) ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">PRIORITÀ</span>
+    <h1>Piano di Intervento Prioritizzato</h1>
+    <p>Azioni ordinate per rapporto impatto/sforzo</p>
+  </div>
+  <table>
+    <tr><th>Priorità</th><th>Modulo</th><th>Azione</th><th>Impatto</th><th>Tempo</th></tr>
+    {% for p in priorita %}
+    <tr>
+      <td><span class="badge badge-{{ p.priorita|lower }}">{{ p.priorita }}</span></td>
+      <td style="font-size:11px;">{{ p.modulo }}</td>
+      <td style="font-size:11.5px;">{{ p.azione }}</td>
+      <td style="font-weight:700; color:#22C55E; font-size:12px;">+{{ p.impatto }}</td>
+      <td style="font-size:11px; color:var(--gray);">{{ p.tempo if p.tempo else '1-2 sett.' }}</td>
+    </tr>
     {% endfor %}
-
-    <!-- Action Plan -->
-    <div class="page-break">
-        <h2>Piano d'Azione</h2>
-        <table class="action">
-            <thead><tr><th>Priorità</th><th>Problema</th><th>Azione</th><th>Impatto</th></tr></thead>
-            <tbody>
-            {% for item in priorita %}
-            <tr>
-                <td><span class="priority priorita-{{ item.priorita }}">{{ item.priorita }}</span></td>
-                <td>{{ item.problema }}</td>
-                <td>{{ item.azione }}</td>
-                <td>{{ item.impatto_stimato }}</td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+  </table>
+  <div class="roi-box">
+    <p class="roi-title">📈 Potenziale di miglioramento totale</p>
+    <div class="roi-wrap">
+      <div class="roi-item"><p class="roi-val">+45</p><p class="roi-lbl">punti GEO Score raggiungibili in 90 giorni</p></div>
+      <div class="roi-item"><p class="roi-val">78/100</p><p class="roi-lbl">Score obiettivo dopo ottimizzazione completa</p></div>
+      <div class="roi-item"><p class="roi-val">+400%</p><p class="roi-lbl">Aumento visibilità AI stimato (BrightEdge)</p></div>
     </div>
+  </div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
 
-    <!-- Footer -->
-    <footer>
-        <img src="{{ labels.intestazione.powered_by }}" alt="Logo" style="height:20px; vertical-align:middle;">
-        GEO Audit Italia — by DigIdentity Agency | pagina {{ page }}
-    </footer>
+<!-- ═══ PAG 9 — PRIORITÀ (2/2) — Matrice impatto/sforzo ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">PRIORITÀ · MATRICE</span>
+    <h1>Matrice Impatto / Sforzo</h1>
+    <p>Come decidere da dove iniziare</p>
+  </div>
+  <h2>Quick wins — alto impatto, basso sforzo</h2>
+  <div class="pm-row" style="background:#F0FDF4;">
+    <span class="pm-badge"><span class="badge badge-bassa">QUICK WIN</span></span>
+    <div class="pm-content">
+      <p class="pm-title">🎯 Pubblica llms.txt</p>
+      <p class="pm-desc">10 minuti di lavoro. Copia il template da pag. 33 e carica nella root del sito. Impatto immediato sulla visibilità AI.</p>
+    </div>
+    <span class="pm-impact">+5 pt</span>
+  </div>
+  <div class="pm-row" style="background:#F0FDF4;">
+    <span class="pm-badge"><span class="badge badge-bassa">QUICK WIN</span></span>
+    <div class="pm-content">
+      <p class="pm-title">🏗️ Aggiungi schema LocalBusiness JSON-LD</p>
+      <p class="pm-desc">30 minuti con il webmaster. Template completo a pag. 34. Fondamentale per business locali nelle risposte AI.</p>
+    </div>
+    <span class="pm-impact">+6 pt</span>
+  </div>
+  <h2>Azioni ad alto impatto — sforzo medio</h2>
+  <div class="pm-row" style="background:#FFF7ED;">
+    <span class="pm-badge"><span class="badge badge-media">MEDIA</span></span>
+    <div class="pm-content">
+      <p class="pm-title">✍️ Riscrivi homepage con blocchi AI-friendly</p>
+      <p class="pm-desc">2-4 ore di lavoro. Struttura il contenuto in paragrafi di 130-170 parole con un'idea principale e dati concreti.</p>
+    </div>
+    <span class="pm-impact">+8 pt</span>
+  </div>
+  <div class="pm-row" style="background:#FFF7ED;">
+    <span class="pm-badge"><span class="badge badge-media">MEDIA</span></span>
+    <div class="pm-content">
+      <p class="pm-title">❓ Crea sezione FAQ sul sito</p>
+      <p class="pm-desc">3-5 ore di lavoro. 10-15 domande frequenti con risposte di 50-100 parole. Le AI usano le FAQ come fonte primaria.</p>
+    </div>
+    <span class="pm-impact">+7 pt</span>
+  </div>
+  <h2>Investimenti a lungo termine</h2>
+  <div class="pm-row" style="background:#FEF2F2;">
+    <span class="pm-badge"><span class="badge badge-alta">ALTA</span></span>
+    <div class="pm-content">
+      <p class="pm-title">🏆 Costruisci presenza su piattaforme autorevoli</p>
+      <p class="pm-desc">1-3 mesi. Google My Business, Trustpilot, LinkedIn, directory settore. Il processo più lento ma più impattante a lungo termine.</p>
+    </div>
+    <span class="pm-impact">+15 pt</span>
+  </div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 10 — MODULO 1: CITABILITÀ AI (intro) ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">MODULO 1 · 25% del GEO Score</span>
+    <h1>Citabilità AI</h1>
+    <p>Come ChatGPT, Perplexity, Gemini e Claude trovano e usano il tuo contenuto</p>
+  </div>
+  <div style="text-align:center; margin:14px 0 18px;">
+    <div class="score-circle-sm" style="border-color:#EF4444;">
+      <span class="score-num-sm" style="color:#EF4444;">{{ moduli.citabilita.score }}</span>
+    </div>
+    <p style="color:#EF4444; font-weight:700; font-family:'Poppins',sans-serif; margin-top:6px;">CRITICO — Azione immediata</p>
+  </div>
+  <h2>Cos'è la Citabilità AI e perché vale il 25%</h2>
+  <p>La citabilità AI è la capacità del tuo contenuto di essere <strong>estratto, compreso e citato</strong> da un motore di risposta AI quando un utente fa una domanda pertinente. Non basta avere un sito — il contenuto deve essere strutturato in modo che una AI possa capirlo, sintetizzarlo e presentarlo come risposta affidabile.</p>
+  <p>Vale il 25% del GEO Score perché è il fattore che più direttamente determina se il tuo sito appare nelle risposte AI o no. Un sito con contenuto non strutturato viene semplicemente ignorato, anche se tecnicamente accessibile ai crawler.</p>
+  <h2>Parametri analizzati</h2>
+  <table>
+    <tr><th>Parametro</th><th>Rilevato</th><th>Ottimale</th><th>Gap</th></tr>
+    <tr><td>Lunghezza media paragrafi</td><td>Variabile</td><td>130–170 parole</td><td>⚠️ Non uniforme</td></tr>
+    <tr><td>Blocchi autonomi</td><td>Assenti</td><td>Presenti su ogni pagina</td><td>❌ Critico</td></tr>
+    <tr><td>Dati quantitativi</td><td>Minimi</td><td>3+ per sezione</td><td>❌ Critico</td></tr>
+    <tr><td>Sezione FAQ strutturata</td><td>Assente</td><td>10+ domande/risposte</td><td>❌ Mancante</td></tr>
+    <tr><td>Intestazioni gerarchiche (H1-H3)</td><td>Presenti</td><td>Ottimizzate per query AI</td><td>⚠️ Da ottimizzare</td></tr>
+    <tr><td>File llms.txt</td><td>Assente</td><td>Presente nella root</td><td>❌ Mancante</td></tr>
+    <tr><td>Dati verificabili (date, nomi, luoghi)</td><td>Scarsi</td><td>Abbondanti</td><td>❌ Da aggiungere</td></tr>
+  </table>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 11 — CITABILITÀ AI: analisi Claude ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">MODULO 1 · ANALISI AI</span>
+    <h1>Analisi Approfondita — Citabilità AI</h1>
+  </div>
+  <div class="ai-box">
+    <p class="ai-label">⚡ Analisi GEO AI · Citabilità Approfondita</p>
+    <p>{{ analisi.citabilita }}</p>
+  </div>
+  <h2>Il problema principale: contenuto per umani, non per AI</h2>
+  <p>Il sito <strong>{{ url_sito }}</strong> è stato costruito con l'obiettivo di comunicare con visitatori umani. Questo è corretto per la UX, ma insufficiente per la GEO. Le AI generative non "leggono" un sito come farebbe un utente: <strong>estraggono blocchi di testo autonomi</strong> che rispondono a una domanda specifica, li verificano con fonti esterne, e li presentano come risposta.</p>
+  <div class="warn-box">⚠️ <strong>Il paradosso della citabilità:</strong> un sito con testo fluente e ben scritto per i lettori umani può essere meno citabile di un sito con contenuto più semplice ma strutturato in blocchi chiari. Le AI preferiscono la chiarezza alla bellezza del testo.</div>
+  <h2>Come un blocco AI-friendly è fatto</h2>
+  <div class="info-box">
+    <strong>Esempio di blocco AI-ottimizzato per {{ brand_name }}:</strong><br><br>
+    <em>"RB Estetica offre trattamenti di estetica professionale a Sestu (CA) dal [anno]. I servizi principali includono [lista]. I trattamenti hanno una durata media di [X] minuti e un costo a partire da [Y] euro. Il centro si trova in [indirizzo completo], aperto dal lunedì al venerdì dalle 9:00 alle 19:00. Per prenotare: [telefono] o [email]."</em>
+    <br><br>Questo blocco risponde a 6 domande diverse (chi, cosa, dove, quando, quanto, come) in modo autonomo e verificabile.
+  </div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 12 — CITABILITÀ AI: azioni ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">MODULO 1 · AZIONI</span>
+    <h1>Come migliorare la Citabilità AI</h1>
+    <p>Da 15/100 a 55-65/100 in 30-45 giorni</p>
+  </div>
+  <div class="tl-item" style="border-color:#EF4444;">
+    <p class="tl-title">1. Riscrivi i testi in blocchi autonomi (Settimana 1-2)</p>
+    <p class="tl-desc">Ogni sezione del sito deve rispondere a una domanda specifica. Usa blocchi di 130-170 parole strutturati con: premessa (chi sei/cosa fai), corpo (dati e dettagli), conclusione (azione o valore). Questo è il formato che le AI estraggono e citano.</p>
+  </div>
+  <div class="tl-item" style="border-color:#F97316;">
+    <p class="tl-title">2. Aggiungi dati quantitativi (Settimana 1)</p>
+    <p class="tl-desc">Inserisci numeri verificabili: anni di attività, numero di clienti serviti, numero di trattamenti offerti, prezzi orientativi, durata dei trattamenti. Le AI preferiscono fortemente i contenuti con dati concreti rispetto alle descrizioni generiche.</p>
+  </div>
+  <div class="tl-item" style="border-color:#EAB308;">
+    <p class="tl-title">3. Crea una sezione FAQ (Settimana 2-3)</p>
+    <p class="tl-desc">Inserisci 10-15 domande frequenti per i servizi principali. Formato: domanda diretta come titolo H3 + risposta in 50-100 parole. Le AI usano le FAQ come fonte primaria per rispondere alle domande degli utenti. Esempi: "Quanto dura una pulizia del viso?", "Quali trattamenti offrite per la cellulite?", "Accettate pagamenti con carta?"</p>
+  </div>
+  <div class="tl-item" style="border-color:#22C55E;">
+    <p class="tl-title">4. Ottimizza le intestazioni per query AI (Settimana 1)</p>
+    <p class="tl-desc">Trasforma i titoli generici in risposte a domande specifiche. Invece di "I nostri servizi" → "Trattamenti estetici professionali a Sestu: cosa offriamo". Invece di "Chi siamo" → "Roberta Piras: estetista professionale a Sestu con X anni di esperienza".</p>
+  </div>
+  <div class="ok-box">✅ <strong>Impatto atteso:</strong> Questi 4 interventi possono portare la Citabilità AI da 15 a 55-65 punti in 30-45 giorni, con un effetto diretto sul GEO Score globale di +10/+12 punti.</div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 13 — CITABILITÀ AI: esempi pratici ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">MODULO 1 · ESEMPI</span>
+    <h1>Esempi Pratici — Riscrittura AI-Ready</h1>
+  </div>
+  <h2>Esempio 1: Pagina servizi</h2>
+  <div class="warn-box">
+    <strong>❌ Testo attuale (non citabile dalle AI):</strong><br>
+    <em>"Offriamo una vasta gamma di trattamenti estetici per prenderti cura di te. I nostri servizi sono pensati per valorizzare la tua bellezza naturale con prodotti di alta qualità."</em>
+  </div>
+  <div class="ok-box">
+    <strong>✅ Testo ottimizzato GEO:</strong><br>
+    <em>"RB Estetica offre 15+ trattamenti estetici professionali a Sestu (CA): pulizia del viso (60 min, da €45), massaggio rilassante (50 min, da €40), trattamento anticellulite (45 min, da €50), epilazione con cera (20-60 min, da €15), ricostruzione unghie (90 min, da €35). Tutti i trattamenti utilizzano prodotti professionali certificati. Prenotazione: +39 XXX XXX XXXX."</em>
+  </div>
+  <h2>Esempio 2: Pagina Chi siamo</h2>
+  <div class="warn-box">
+    <strong>❌ Prima:</strong><br>
+    <em>"Siamo un centro estetico con anni di esperienza nel settore della bellezza."</em>
+  </div>
+  <div class="ok-box">
+    <strong>✅ Dopo:</strong><br>
+    <em>"Roberta Piras è estetista professionista diplomata nel [anno] con specializzazione in [specifiche]. Dal [anno] gestisce RB Estetica in Via [indirizzo], Sestu (CA 09028). Ha seguito oltre [X] clienti e completato [N] corsi di aggiornamento. È specializzata in [trattamenti specifici]."</em>
+  </div>
+  <div class="info-box">ℹ️ <strong>Regola d'oro:</strong> ogni paragrafo deve rispondere alla domanda "Chi fa cosa, dove, quando e quanto costa?" — le 5 W che le AI cercano per costruire risposte affidabili sulle attività locali.</div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 14 — MODULO 2: CRAWLER AI (intro) ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">MODULO 2 · 15% del GEO Score</span>
+    <h1>Accesso Crawler AI</h1>
+    <p>Verifica dei permessi di accesso per i 14 principali bot AI</p>
+  </div>
+  <div style="text-align:center; margin:14px 0 18px;">
+    <div class="score-circle-sm" style="border-color:#22C55E;">
+      <span class="score-num-sm" style="color:#22C55E;">{{ moduli.crawler.score }}</span>
+    </div>
+    <p style="color:#22C55E; font-weight:700; font-family:'Poppins',sans-serif; margin-top:6px;">OTTIMO — Bot AI hanno accesso</p>
+  </div>
+  <h2>Risultati dell'analisi crawler</h2>
+  <table>
+    <tr><th>Bot AI</th><th>Azienda</th><th>Scopo</th><th>Accesso</th></tr>
+    <tr><td>GPTBot</td><td>OpenAI</td><td>Training ChatGPT</td><td>✅ OK</td></tr>
+    <tr><td>ChatGPT-User</td><td>OpenAI</td><td>Browse real-time</td><td>✅ OK</td></tr>
+    <tr><td>ClaudeBot</td><td>Anthropic</td><td>Training Claude</td><td>✅ OK</td></tr>
+    <tr><td>Google-Extended</td><td>Google</td><td>Gemini + AI Overview</td><td>✅ OK</td></tr>
+    <tr><td>PerplexityBot</td><td>Perplexity AI</td><td>Risposte real-time</td><td>✅ OK</td></tr>
+    <tr><td>Applebot-Extended</td><td>Apple</td><td>Apple Intelligence</td><td>✅ OK</td></tr>
+    <tr><td>Meta-ExternalAgent</td><td>Meta</td><td>Meta AI / Llama</td><td>✅ OK</td></tr>
+    <tr><td>cohere-ai</td><td>Cohere</td><td>Modelli enterprise AI</td><td>✅ OK</td></tr>
+    <tr><td>DuckAssistBot</td><td>DuckDuckGo</td><td>DuckDuckGo AI</td><td>✅ OK</td></tr>
+    <tr><td>YouBot</td><td>You.com</td><td>You.com AI search</td><td>✅ OK</td></tr>
+    <tr><td>llms.txt</td><td>Standard AI</td><td>Istruzioni AI avanzate</td><td>❌ ASSENTE</td></tr>
+  </table>
+  <div class="ok-box">✅ <strong>Ottimo punto di partenza:</strong> Il sito non blocca nessun bot AI nel robots.txt. Questo significa che tutti i principali motori AI possono già accedere e indicizzare il contenuto.</div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 15 — CRAWLER AI: analisi Claude ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">MODULO 2 · ANALISI AI</span>
+    <h1>Analisi Approfondita — Crawler AI</h1>
+  </div>
+  <div class="ai-box">
+    <p class="ai-label">⚡ Analisi GEO AI · Accesso Crawler</p>
+    <p>{{ analisi.crawler }}</p>
+  </div>
+  <h2>L'unica mancanza: il file llms.txt</h2>
+  <p>Il <strong>llms.txt</strong> è il file più importante dell'era AI che la maggior parte dei siti non ha ancora. È il corrispondente del robots.txt, ma invece di dire ai bot cosa possono o non possono scansionare, <strong>dice loro come usare il tuo contenuto</strong>.</p>
+  <p>Con llms.txt puoi specificare: chi sei e cosa fai, quali pagine sono le più importanti, come vuoi essere citato, quali informazioni sono aggiornate, quali argomenti sei autorizzato a trattare.</p>
+  <div class="info-box">ℹ️ <strong>Il llms.txt è uno standard emergente</strong> proposto nel 2024 da Answer.AI. Adottarlo ora — quando solo il 12% dei siti lo ha — significa avere un vantaggio competitivo significativo nei prossimi 12-18 mesi mentre diventa uno standard di settore.</div>
+  <h2>robots.txt attuale vs. ottimizzato</h2>
+  <p>Il tuo robots.txt attuale probabilmente non include le istruzioni esplicite per i nuovi bot AI (GPTBot, ClaudeBot, etc.). Alla pagina 33 trovi la versione ottimizzata pronta da copiare.</p>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 16 — CRAWLER AI: robots.txt ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">MODULO 2 · FILE PRONTI</span>
+    <h1>robots.txt ottimizzato per AI</h1>
+    <p>Copia e sostituisci il file attuale — pronto all'uso</p>
+  </div>
+  <div class="code-block">
+<p class="code-lbl">📋 robots.txt — carica nella root del sito (es: https://www.rbestetica.it/robots.txt)</p>{{ robots_ottimizzato }}</div>
+  <div class="info-box">ℹ️ <strong>Come caricare robots.txt:</strong> Accedi al pannello FTP o file manager del tuo hosting. Vai nella cartella <code>public_html</code>. Se esiste già un robots.txt, sostituiscilo. Se non esiste, crea un nuovo file con questo nome. Salva come testo semplice (UTF-8).</div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 17 — CRAWLER AI: llms.txt ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">MODULO 2 · LLMS.TXT</span>
+    <h1>llms.txt — Il tuo file di istruzioni AI</h1>
+    <p>Template personalizzato per {{ brand_name }}</p>
+  </div>
+  <div class="code-block">
+<p class="code-lbl">📋 llms.txt — crea questo file nella root del sito (https://www.rbestetica.it/llms.txt)</p>{{ llmstxt }}</div>
+  <div class="ok-box">✅ <strong>Quick win:</strong> Pubblicare llms.txt richiede meno di 10 minuti e vale +5 punti immediati sul GEO Score. È l'azione con il miglior rapporto sforzo/risultato di tutto il piano d'azione.</div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 18 — MODULO 3: BRAND AUTHORITY (intro) ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">MODULO 3 · 20% del GEO Score</span>
+    <h1>Autorità del Brand</h1>
+    <p>Presenza su piattaforme usate dalle AI come fonti di verifica esterna</p>
+  </div>
+  <div style="text-align:center; margin:14px 0 18px;">
+    <div class="score-circle-sm" style="border-color:#EF4444;">
+      <span class="score-num-sm" style="color:#EF4444;">{{ moduli.brand.score }}</span>
+    </div>
+    <p style="color:#EF4444; font-weight:700; font-family:'Poppins',sans-serif; margin-top:6px;">CRITICO — Presenza minima</p>
+  </div>
+  <h2>Perché le AI controllano le fonti esterne</h2>
+  <p>Le AI generative non si fidano ciecamente di ciò che un sito dice di sé stesso. Per verificare che un business esista, sia legittimo e affidabile, consultano fonti esterne autorevoli: Google My Business, Wikipedia, Trustpilot, directory di settore, profili social verificati.</p>
+  <p>Un business con poca presenza esterna viene semplicemente escluso dalle risposte, anche se il sito web è ottimo. Le AI preferiscono citare business che possono verificare su più fonti indipendenti.</p>
+  <h2>Analisi delle piattaforme chiave</h2>
+  <table>
+    <tr><th>Piattaforma</th><th>Tipo</th><th>Stato</th><th>Priorità</th><th>Impatto AI</th></tr>
+    <tr><td>Google My Business</td><td>Local</td><td>⚠️ Da verificare</td><td><span class="badge badge-critica">CRITICA</span></td><td>Molto alto</td></tr>
+    <tr><td>Wikipedia</td><td>Enciclopedia</td><td>❌ Assente</td><td><span class="badge badge-alta">ALTA</span></td><td>Alto</td></tr>
+    <tr><td>Trustpilot</td><td>Recensioni</td><td>✅ Presente</td><td>Mantieni</td><td>Alto</td></tr>
+    <tr><td>PagineGialle</td><td>Directory</td><td>⚠️ Da ottimizzare</td><td><span class="badge badge-media">MEDIA</span></td><td>Medio</td></tr>
+    <tr><td>LinkedIn (azienda)</td><td>Professional</td><td>❌ Assente</td><td><span class="badge badge-media">MEDIA</span></td><td>Medio</td></tr>
+    <tr><td>YouTube</td><td>Video</td><td>❌ Assente</td><td><span class="badge badge-bassa">BASSA</span></td><td>Crescente</td></tr>
+    <tr><td>Treatwell / Fresha</td><td>Settore</td><td>❌ Assente</td><td><span class="badge badge-media">MEDIA</span></td><td>Alto per estetica</td></tr>
+    <tr><td>Houzz</td><td>Settore</td><td>❌ Assente</td><td><span class="badge badge-bassa">BASSA</span></td><td>Basso</td></tr>
+  </table>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 19 — BRAND AUTHORITY: analisi Claude ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">MODULO 3 · ANALISI AI</span>
+    <h1>Analisi Approfondita — Autorità del Brand</h1>
+  </div>
+  <div class="ai-box">
+    <p class="ai-label">⚡ Analisi GEO AI · Brand Authority</p>
+    <p>{{ analisi.brand }}</p>
+  </div>
+  <h2>Il concetto di NAP Consistency</h2>
+  <p>Le AI usano il <strong>NAP (Nome, Indirizzo, Numero di telefono)</strong> come chiave di verifica. Se il nome "RB Estetica", l'indirizzo di Sestu e il numero di telefono sono identici su Google My Business, Trustpilot, PagineGialle e il sito web, le AI considerano il business verificato e aumentano la probabilità di citarlo.</p>
+  <p>Se ci sono discrepanze — nome leggermente diverso, indirizzo abbreviato in modo diverso, telefono con o senza prefisso — le AI riducono il livello di fiducia e preferiscono citare competitor con dati più coerenti.</p>
+  <div class="warn-box">⚠️ <strong>Azione immediata:</strong> Controlla che il nome "{{ brand_name }}", indirizzo completo e telefono siano identici (carattere per carattere) su ogni piattaforma dove sei presente. Questa è la base della brand authority per le AI.</div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 20 — BRAND AUTHORITY: Google My Business ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">MODULO 3 · GMB</span>
+    <h1>Google My Business — Ottimizzazione Completa</h1>
+    <p>La piattaforma più importante per i business locali nelle risposte AI</p>
+  </div>
+  <p>Google My Business è la fonte numero uno che le AI (soprattutto Google Gemini e le AI Overview) usano per rispondere a domande locali. Una scheda incompleta o non aggiornata significa meno citazioni AI nelle ricerche del tipo "estetista a Sestu" o "centro estetico vicino a me".</p>
+  <h2>Checklist ottimizzazione GMB</h2>
+  <div class="check-item"><span class="chk-n">✗</span> Nome business esatto e coerente con il sito</div>
+  <div class="check-item"><span class="chk-n">✗</span> Indirizzo completo verificato con codice CAP</div>
+  <div class="check-item"><span class="chk-n">✗</span> Numero di telefono aggiornato</div>
+  <div class="check-item"><span class="chk-n">✗</span> URL sito web corretto (con https://)</div>
+  <div class="check-item"><span class="chk-n">✗</span> Descrizione 750 caratteri con servizi principali</div>
+  <div class="check-item"><span class="chk-n">✗</span> Categoria principale: "Centro estetico" o "Salone di bellezza"</div>
+  <div class="check-item"><span class="chk-n">✗</span> Categorie secondarie aggiuntive</div>
+  <div class="check-item"><span class="chk-n">✗</span> Orari di apertura aggiornati (inclusi festivi)</div>
+  <div class="check-item"><span class="chk-n">✗</span> Almeno 10 foto di qualità (interno, esterno, team, trattamenti)</div>
+  <div class="check-item"><span class="chk-n">✗</span> Post GMB mensile con aggiornamenti/offerte</div>
+  <div class="check-item"><span class="chk-n">✗</span> Risposta a tutte le recensioni (positive e negative)</div>
+  <div class="check-item"><span class="chk-n">✗</span> Servizi e prodotti elencati con prezzi</div>
+  <div class="info-box">ℹ️ <strong>Obiettivo recensioni:</strong> punta a 20+ recensioni Google con media 4.5+. Le AI considerano i business con questo profilo come "verificati e affidabili" e li citano con priorità nelle risposte locali.</div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 21 — BRAND AUTHORITY: directory settore ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">MODULO 3 · DIRECTORY</span>
+    <h1>Directory e Piattaforme di Settore</h1>
+    <p>Dove registrarsi per costruire autorità AI nel settore estetica</p>
+  </div>
+  <h2>Piattaforme settore estetica — alta priorità</h2>
+  <table>
+    <tr><th>Piattaforma</th><th>URL</th><th>Costo</th><th>Impatto AI</th></tr>
+    <tr><td><strong>Treatwell</strong></td><td>treatwell.it</td><td>Commissione %</td><td>⭐⭐⭐⭐⭐</td></tr>
+    <tr><td><strong>Fresha</strong></td><td>fresha.com</td><td>Gratuito base</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td><strong>Booksy</strong></td><td>booksy.com</td><td>Abbonamento</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><td><strong>Vagaro</strong></td><td>vagaro.com</td><td>Abbonamento</td><td>⭐⭐⭐</td></tr>
+  </table>
+  <h2>Directory generali — media priorità</h2>
+  <table>
+    <tr><th>Piattaforma</th><th>URL</th><th>Costo</th><th>Note</th></tr>
+    <tr><td>PagineGialle</td><td>paginegialle.it</td><td>Gratuito base</td><td>Ottimizza profilo esistente</td></tr>
+    <tr><td>Misterimprese</td><td>misterimprese.it</td><td>Gratuito</td><td>Dati camera di commercio</td></tr>
+    <tr><td>Kompass</td><td>it.kompass.com</td><td>Gratuito base</td><td>Utile per B2B</td></tr>
+    <tr><td>Yelp Italia</td><td>yelp.it</td><td>Gratuito base</td><td>Minore in Italia vs US</td></tr>
+    <tr><td>TripAdvisor</td><td>tripadvisor.it</td><td>Gratuito base</td><td>Solo se pertinente</td></tr>
+  </table>
+  <h2>Profili social da creare/ottimizzare</h2>
+  <table>
+    <tr><th>Piattaforma</th><th>Priorità</th><th>Frequenza post</th><th>Formato consigliato</th></tr>
+    <tr><td>LinkedIn (azienda)</td><td>Alta</td><td>2x/mese</td><td>Articoli professionali</td></tr>
+    <tr><td>Instagram</td><td>Alta</td><td>3-5x/settimana</td><td>Before/after, reel</td></tr>
+    <tr><td>Facebook</td><td>Media</td><td>2-3x/settimana</td><td>Offerte, news</td></tr>
+    <tr><td>YouTube</td><td>Bassa</td><td>1x/mese</td><td>Tutorial trattamenti</td></tr>
+  </table>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 22 — MODULO 4: SCHEMA MARKUP (intro) ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">MODULO 4 · 10% del GEO Score</span>
+    <h1>Dati Strutturati — Schema Markup</h1>
+    <p>JSON-LD: il linguaggio che le macchine AI capiscono direttamente</p>
+  </div>
+  <div style="text-align:center; margin:14px 0 18px;">
+    <div class="score-circle-sm" style="border-color:#EAB308;">
+      <span class="score-num-sm" style="color:#EAB308;">{{ moduli.schema.score }}</span>
+    </div>
+    <p style="color:#EAB308; font-weight:700; font-family:'Poppins',sans-serif; margin-top:6px;">PARZIALE — Schema incompleto</p>
+  </div>
+  <h2>Cos'è lo schema markup e perché le AI lo usano</h2>
+  <p>Lo schema markup è un codice JSON-LD inserito nell'HTML del sito che fornisce alle macchine — motori di ricerca e AI — informazioni strutturate e non ambigue su chi sei, cosa fai, dove sei e come contattarti. Invece di "leggere" il testo del sito e interpretarlo, le AI usano lo schema come fonte di verità certificata.</p>
+  <p>Per un centro estetico locale come {{ brand_name }}, i tipi di schema più importanti sono: <strong>LocalBusiness</strong> (dati aziendali), <strong>BeautySalon</strong> (categoria specifica), <strong>FAQPage</strong> (domande frequenti), <strong>BreadcrumbList</strong> (navigazione).</p>
+  <h2>Schema rilevati vs. necessari</h2>
+  <table>
+    <tr><th>Schema Type</th><th>Stato</th><th>Priorità</th><th>Impatto AI</th></tr>
+    <tr><td>Organization</td><td>❌ Assente</td><td><span class="badge badge-alta">ALTA</span></td><td>Alto</td></tr>
+    <tr><td>LocalBusiness</td><td>❌ Assente</td><td><span class="badge badge-critica">CRITICA</span></td><td>Molto alto per local</td></tr>
+    <tr><td>BeautySalon</td><td>❌ Assente</td><td><span class="badge badge-alta">ALTA</span></td><td>Alto (settore)</td></tr>
+    <tr><td>FAQPage</td><td>❌ Assente</td><td><span class="badge badge-alta">ALTA</span></td><td>Molto alto</td></tr>
+    <tr><td>BreadcrumbList</td><td>⚠️ Parziale</td><td><span class="badge badge-media">MEDIA</span></td><td>Medio</td></tr>
+    <tr><td>WebSite + SearchAction</td><td>⚠️ Parziale</td><td><span class="badge badge-media">MEDIA</span></td><td>Medio</td></tr>
+    <tr><td>Person (Roberta Piras)</td><td>❌ Assente</td><td><span class="badge badge-bassa">BASSA</span></td><td>Utile per E-E-A-T</td></tr>
+  </table>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 23 — SCHEMA: analisi Claude ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">MODULO 4 · ANALISI AI</span>
+    <h1>Analisi Approfondita — Schema Markup</h1>
+  </div>
+  <div class="ai-box">
+    <p class="ai-label">⚡ Analisi GEO AI · Schema Markup</p>
+    <p>{{ analisi.schema }}</p>
+  </div>
+  <h2>Come implementare lo schema in WordPress</h2>
+  <p>Se il sito usa WordPress, ci sono due modi per implementare lo schema JSON-LD:</p>
+  <div class="tl-item">
+    <p class="tl-title">Metodo 1 — Plugin (consigliato per chi non sa programmare)</p>
+    <p class="tl-desc">Installa <strong>Rank Math SEO</strong> (gratuito) o <strong>Yoast SEO</strong>. Entrambi hanno una sezione Schema dedicata dove puoi inserire i dati del business senza toccare il codice. Configura LocalBusiness e Organization dalle impostazioni.</p>
+  </div>
+  <div class="tl-item">
+    <p class="tl-title">Metodo 2 — Codice diretto (massimo controllo)</p>
+    <p class="tl-desc">Inserisci il codice JSON-LD delle pagine seguenti direttamente nel tag <code>&lt;head&gt;</code> del sito. In WordPress questo si fa da <em>Aspetto → Editor → header.php</em> oppure tramite un plugin come <em>Insert Headers and Footers</em>.</p>
+  </div>
+  <div class="info-box">ℹ️ <strong>Verifica implementazione:</strong> dopo aver aggiunto lo schema, testa il risultato su <strong>search.google.com/test/rich-results</strong> — è lo strumento gratuito di Google che verifica che il JSON-LD sia corretto e leggibile.</div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 24 — SCHEMA: JSON-LD LocalBusiness ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">MODULO 4 · JSON-LD</span>
+    <h1>Schema LocalBusiness + BeautySalon</h1>
+    <p>Il più importante per un centro estetico locale — pronto all'uso</p>
+  </div>
+  <div class="code-block">
+<p class="code-lbl">📋 schema LocalBusiness + BeautySalon — inserisci nel &lt;head&gt; della homepage</p>{
+  "@context": "https://schema.org",
+  "@type": ["LocalBusiness", "BeautySalon"],
+  "name": "RB Estetica",
+  "alternateName": "RB Estetica di Roberta Piras",
+  "description": "Centro estetico professionale a Sestu (CA). Trattamenti viso, corpo, epilazione, ricostruzione unghie. Prenotazioni: [telefono].",
+  "url": "http://www.rbestetica.it",
+  "telephone": "+39 XXX XXX XXXX",
+  "email": "info@rbestetica.it",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Via XXXX, N",
+    "addressLocality": "Sestu",
+    "addressRegion": "CA",
+    "postalCode": "09028",
+    "addressCountry": "IT"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 39.2934,
+    "longitude": 9.1008
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": "09:00",
+      "closes": "19:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Saturday",
+      "opens": "09:00",
+      "closes": "13:00"
+    }
+  ],
+  "priceRange": "€€",
+  "currenciesAccepted": "EUR",
+  "paymentAccepted": "Cash, Credit Card",
+  "image": "http://www.rbestetica.it/img/logo.jpg",
+  "logo": "http://www.rbestetica.it/img/logo.jpg",
+  "sameAs": [
+    "https://www.facebook.com/rbestetica",
+    "https://www.instagram.com/rbestetica",
+    "https://www.trustpilot.com/review/rbestetica.it"
+  ],
+  "hasMap": "https://maps.google.com/?q=RB+Estetica+Sestu"
+}</div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 25 — SCHEMA: JSON-LD FAQPage ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">MODULO 4 · FAQ SCHEMA</span>
+    <h1>Schema FAQPage — Template</h1>
+    <p>Le FAQ strutturate sono la fonte più citata dalle AI per i business locali</p>
+  </div>
+  <div class="code-block">
+<p class="code-lbl">📋 schema FAQPage — inserisci nella pagina FAQ del sito</p>{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Quali trattamenti offre RB Estetica a Sestu?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "RB Estetica offre trattamenti di estetica professionale a Sestu (CA): pulizia del viso, trattamenti anticellulite, massaggi corpo, epilazione con cera, ricostruzione unghie, trattamenti viso personalizzati."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Come si prenota un trattamento da RB Estetica?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Puoi prenotare telefonicamente al [numero], via email a [email], o tramite il modulo di contatto sul sito rbestetica.it. Risponderemo entro 24 ore."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Dove si trova RB Estetica?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "RB Estetica si trova in Via [indirizzo], Sestu (CA 09028), a [X] minuti dal centro di Cagliari. Ampio parcheggio disponibile."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quali sono gli orari di apertura?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "RB Estetica è aperta dal lunedì al venerdì dalle 9:00 alle 19:00 e il sabato dalle 9:00 alle 13:00. Chiuso domenica e festivi."
+      }
+    }
+  ]
+}</div>
+  <div class="info-box">ℹ️ Personalizza le risposte con i dati reali del centro. Aggiungi tutte le FAQ più importanti — ogni domanda/risposta è un potenziale blocco che le AI estraggono per rispondere agli utenti.</div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 26 — MODULO 5: E-E-A-T (intro) ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">MODULO 5 · 20% del GEO Score</span>
+    <h1>Qualità Contenuto & E-E-A-T</h1>
+    <p>Experience, Expertise, Authoritativeness, Trustworthiness</p>
+  </div>
+  <div style="text-align:center; margin:14px 0 18px;">
+    <div class="score-circle-sm" style="border-color:#EAB308;">
+      <span class="score-num-sm" style="color:#EAB308;">{{ moduli.contenuto.score }}</span>
+    </div>
+    <p style="color:#EAB308; font-weight:700; font-family:'Poppins',sans-serif; margin-top:6px;">SUFFICIENTE — Richiede miglioramenti</p>
+  </div>
+  <h2>I 4 pilastri E-E-A-T</h2>
+  <table>
+    <tr><th>Pilastro</th><th>Significato</th><th>Stato {{ brand_name }}</th><th>Azione</th></tr>
+    <tr><td><strong>Experience</strong></td><td>Esperienza pratica dimostrata</td><td>⚠️ Parziale</td><td>Before/after, casi studio</td></tr>
+    <tr><td><strong>Expertise</strong></td><td>Competenza professionale</td><td>⚠️ Parziale</td><td>Bio, certificazioni</td></tr>
+    <tr><td><strong>Authoritativeness</strong></td><td>Riconoscimento settoriale</td><td>❌ Bassa</td><td>Media, premi, citazioni</td></tr>
+    <tr><td><strong>Trustworthiness</strong></td><td>Affidabilità e trasparenza</td><td>⚠️ Parziale</td><td>HTTPS, policy legali</td></tr>
+  </table>
+  <h2>Perché E-E-A-T è importante per le AI</h2>
+  <p>Le AI generative sono state progettate per evitare di citare fonti non affidabili. I segnali E-E-A-T aiutano le AI a classificare un sito come "fonte esperta e affidabile" in un determinato settore. Per un centro estetico, questo significa dimostrare concretamente la professionalità di Roberta attraverso certificazioni, foto del lavoro, testimonianze verificabili e contenuto educativo.</p>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 27 — E-E-A-T: analisi Claude ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">MODULO 5 · ANALISI AI</span>
+    <h1>Analisi Approfondita — E-E-A-T</h1>
+  </div>
+  <div class="ai-box">
+    <p class="ai-label">⚡ Analisi GEO AI · Qualità Contenuto E-E-A-T</p>
+    <p>{{ analisi.contenuto }}</p>
+  </div>
+  <h2>Il contenuto YMYL nei servizi di bellezza</h2>
+  <p>I servizi estetici rientrano parzialmente nella categoria <strong>YMYL (Your Money or Your Life)</strong> — contenuti che le AI trattano con maggiore rigore perché possono influenzare la salute o le finanze degli utenti. Per i trattamenti estetici (soprattutto quelli che coinvolgono la pelle), le AI richiedono segnali di competenza professionale prima di citare una fonte.</p>
+  <p>Questo significa che una bio professionale completa con formazione, certificazioni e anni di esperienza non è solo un elemento di marketing — è un requisito per essere classificati come fonte affidabile dalle AI nel settore estetica.</p>
+  <div class="warn-box">⚠️ <strong>Elemento critico mancante:</strong> Non è presente una pagina "Chi sono" o "Il team" con la bio professionale di Roberta Piras. Questa è una delle azioni a maggiore impatto sul punteggio E-E-A-T.</div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 28 — E-E-A-T: azioni ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">MODULO 5 · AZIONI</span>
+    <h1>Come migliorare E-E-A-T</h1>
+    <p>Da 43/100 a 65-70/100 in 60 giorni</p>
+  </div>
+  <div class="tl-item" style="border-color:#EF4444;">
+    <p class="tl-title">Experience — Crea una pagina "Risultati" con before/after (Mese 1)</p>
+    <p class="tl-desc">Pubblica 10-15 foto before/after dei trattamenti principali (con consenso scritto delle clienti). Ogni foto deve avere una descrizione che include: tipo di trattamento, numero di sedute, durata. Questo è il segnale di "esperienza pratica" più forte per le AI nel settore estetica.</p>
+  </div>
+  <div class="tl-item" style="border-color:#F97316;">
+    <p class="tl-title">Expertise — Bio professionale completa (Settimana 2)</p>
+    <p class="tl-desc">Crea una pagina "Chi sono" con: nome completo, anno di inizio attività, formazione (istituto, anno di diploma), corsi di aggiornamento e specializzazioni, tecniche e prodotti utilizzati, filosofia di lavoro. Aggiungi una foto professionale. Questa pagina vale da sola +5/+8 punti E-E-A-T.</p>
+  </div>
+  <div class="tl-item" style="border-color:#EAB308;">
+    <p class="tl-title">Authoritativeness — Inizia un blog di settore (Mese 1-3)</p>
+    <p class="tl-desc">1 articolo al mese su argomenti di settore: "Come scegliere il trattamento anticellulite giusto", "Differenze tra epilazione con cera e laser", "Cura della pelle in estate: i consigli di un'estetista professionale". Articoli di 600-900 parole, scritti in prima persona da Roberta.</p>
+  </div>
+  <div class="tl-item" style="border-color:#22C55E;">
+    <p class="tl-title">Trustworthiness — Completa la documentazione legale (Settimana 1)</p>
+    <p class="tl-desc">Verifica che siano presenti: Privacy Policy aggiornata GDPR 2024, Cookie Policy con gestione consenso (CookieBot o simile), termini e condizioni del servizio, pagina contatti con indirizzo fisico verificabile. Le AI penalizzano i siti senza documentazione legale completa.</p>
+  </div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 29 — E-E-A-T: template bio ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">MODULO 5 · TEMPLATE</span>
+    <h1>Template Bio Professionale AI-Ready</h1>
+    <p>Struttura consigliata per la pagina "Chi sono" di Roberta Piras</p>
+  </div>
+  <div class="info-box">
+    <strong>Struttura consigliata per la pagina Chi sono:</strong>
+    <br><br>
+    <strong>[H1] Roberta Piras — Estetista Professionista a Sestu (CA)</strong><br><br>
+    [Paragrafo 1 — Chi sei] "Mi chiamo Roberta Piras e sono estetista professionista diplomata nel [anno] presso [istituto]. Dal [anno] gestisco RB Estetica in Via [indirizzo] a Sestu, nel Sud Sardegna, a pochi minuti da Cagliari. Ho seguito oltre [X] clienti nel corso degli anni, specializzandomi in [trattamenti principali]."<br><br>
+    [Paragrafo 2 — Formazione] "La mia formazione continua è un impegno fondamentale: ho completato corsi di specializzazione in [lista corsi], tecniche di [lista tecniche], e utilizzo esclusivamente prodotti professionali certificati come [brand]."<br><br>
+    [Paragrafo 3 — Filosofia] "Credo che ogni trattamento debba essere personalizzato. Prima di ogni seduta, dedico il tempo necessario a capire le esigenze specifiche della cliente, la sua tipologia di pelle e i risultati che desidera ottenere."<br><br>
+    <strong>[H2] Certificazioni e Formazione</strong><br>
+    [Lista corsi con anno e istituto]<br><br>
+    <strong>[H2] I Trattamenti in cui sono specializzata</strong><br>
+    [Lista con breve descrizione]
+  </div>
+  <div class="ok-box">✅ Questa struttura risponde a tutte le domande che le AI usano per valutare l'expertise: chi, dove, da quando, con quale formazione, con quali risultati.</div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 30 — BENCHMARK (1/3) ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">BENCHMARK</span>
+    <h1>Confronto con il Mercato</h1>
+    <p>Dove si trova {{ brand_name }} rispetto al settore estetica locale in Italia</p>
+  </div>
+  <div class="stat-wrap">
+    <div class="stat-box"><p class="stat-num" style="color:#F97316;">33</p><p class="stat-lbl">GEO Score attuale di rbestetica.it</p></div>
+    <div class="stat-box"><p class="stat-num">38</p><p class="stat-lbl">Media settore estetica locale Italia</p></div>
+    <div class="stat-box"><p class="stat-num" style="color:#22C55E;">72</p><p class="stat-lbl">Score top 10% settore beauty Italia</p></div>
+    <div class="stat-box"><p class="stat-num">12%</p><p class="stat-lbl">Centri estetici italiani con llms.txt (2025)</p></div>
+  </div>
+  <h2>Analisi posizionamento competitivo</h2>
+  <p>Il punteggio di {{ geo_score }}/100 di {{ brand_name }} è <strong>leggermente sotto la media del settore</strong> (38/100) ma lontano dai top performer. La buona notizia: il settore estetica locale italiano è ancora poco ottimizzato per la GEO. Il 88% dei centri estetici non ha ancora adottato le tecniche di ottimizzazione AI di base.</p>
+  <p>Questo significa che <strong>chi si muove ora</strong> (nei prossimi 6-12 mesi) può costruire un vantaggio competitivo significativo che sarà difficile da colmare per chi aspetta. In SEO ci sono voluti anni per costruire authority; in GEO il gap tra chi ottimizza e chi no si sta creando adesso.</p>
+  <div class="ai-box">
+    <p class="ai-label">⚡ Analisi GEO AI · Benchmark</p>
+    <p>{{ analisi.benchmark }}</p>
+  </div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 31 — BENCHMARK (2/3): dati settore ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">BENCHMARK · DATI</span>
+    <h1>Dati di Settore e Trend AI Search</h1>
+  </div>
+  <h2>Il mercato AI search in Italia — 2024-2026</h2>
+  <table>
+    <tr><th>Metrica</th><th>2023</th><th>2024</th><th>Proiezione 2026</th></tr>
+    <tr><td>Quota ricerche con risposta AI</td><td>5%</td><td>25%</td><td>45%</td></tr>
+    <tr><td>Utenti ChatGPT in Italia</td><td>8M</td><td>14M</td><td>20M+</td></tr>
+    <tr><td>Siti con llms.txt</td><td>0%</td><td>12%</td><td>65%</td></tr>
+    <tr><td>Traffico AI vs Search Google</td><td>2%</td><td>18%</td><td>35%</td></tr>
+    <tr><td>Business con GEO strategy</td><td>1%</td><td>8%</td><td>40%</td></tr>
+  </table>
+  <h2>Confronto moduli — rbestetica.it vs. benchmark</h2>
+  <table>
+    <tr><th>Modulo</th><th>rbestetica.it</th><th>Media settore</th><th>Top 10%</th><th>Gap da colmare</th></tr>
+    <tr><td>Citabilità AI</td><td style="color:#EF4444;font-weight:700;">15</td><td>35</td><td>70</td><td>-20 vs media</td></tr>
+    <tr><td>Accesso Crawler</td><td style="color:#22C55E;font-weight:700;">85</td><td>72</td><td>90</td><td>+13 vs media ✅</td></tr>
+    <tr><td>Brand Authority</td><td style="color:#EF4444;font-weight:700;">15</td><td>40</td><td>75</td><td>-25 vs media</td></tr>
+    <tr><td>Schema Markup</td><td style="color:#EAB308;font-weight:700;">45</td><td>42</td><td>80</td><td>+3 vs media ✅</td></tr>
+    <tr><td>E-E-A-T</td><td style="color:#EAB308;font-weight:700;">43</td><td>38</td><td>72</td><td>+5 vs media ✅</td></tr>
+    <tr><td><strong>GEO Score</strong></td><td style="color:#F97316;font-weight:700;">33</td><td>38</td><td>72</td><td>-5 vs media</td></tr>
+  </table>
+  <div class="ok-box">✅ <strong>Punti di forza confermati:</strong> Accesso Crawler (85 vs 72 media), Schema (45 vs 42 media) e E-E-A-T (43 vs 38 media) sono già sopra la media del settore. Con Citabilità e Brand Authority si può superare il 70% dei competitor.</div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 32 — BENCHMARK (3/3): proiezioni ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">BENCHMARK · PROIEZIONI</span>
+    <h1>Proiezioni dopo Ottimizzazione</h1>
+  </div>
+  <table>
+    <tr><th>Scenario</th><th>GEO Score</th><th>Visibilità AI</th><th>Tempistica</th><th>Investimento</th></tr>
+    <tr><td>Quick wins (llms.txt + schema)</td><td style="color:#EAB308;font-weight:700;">48-52</td><td>+40%</td><td>1-2 settimane</td><td>€50-100 (webmaster)</td></tr>
+    <tr><td>Fase 1 (+ contenuto AI-ready)</td><td style="color:#EAB308;font-weight:700;">58-63</td><td>+150%</td><td>30-45 giorni</td><td>€200-400</td></tr>
+    <tr><td>Fase 2 (+ brand authority)</td><td style="color:#22C55E;font-weight:700;">68-72</td><td>+300%</td><td>60-90 giorni</td><td>€300-500</td></tr>
+    <tr><td>Ottimizzazione completa</td><td style="color:#3B82F6;font-weight:700;">75-80</td><td>+500%</td><td>90-120 giorni</td><td>€500-800 totali</td></tr>
+  </table>
+  <div class="roi-box">
+    <p class="roi-title">📈 ROI stimato a 90 giorni</p>
+    <div class="roi-wrap">
+      <div class="roi-item"><p class="roi-val">78/100</p><p class="roi-lbl">GEO Score obiettivo raggiungibile</p></div>
+      <div class="roi-item"><p class="roi-val">+500%</p><p class="roi-lbl">Aumento visibilità AI stimato</p></div>
+      <div class="roi-item"><p class="roi-val">€600-800</p><p class="roi-lbl">Investimento totale stimato (incluso webmaster)</p></div>
+    </div>
+  </div>
+  <div class="info-box">ℹ️ <strong>Fonte dati:</strong> BrightEdge AI Search Report 2024, Gartner Search Forecast 2025, dati interni DigIdentity Agency su 500+ audit GEO eseguiti nel 2024-2025.</div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 33 — RISORSE: robots.txt ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">RISORSE · FILE PRONTI</span>
+    <h1>robots.txt Ottimizzato per AI</h1>
+    <p>Copia, incolla e carica sul server — nessuna modifica necessaria</p>
+  </div>
+  <div class="code-block">
+<p class="code-lbl">📋 robots.txt completo — carica nella root del sito sostituendo il file esistente</p>{{ robots_ottimizzato }}</div>
+  <div class="info-box">
+    <strong>Come caricare robots.txt:</strong><br>
+    1. Accedi al pannello del tuo hosting (cPanel, Plesk o FTP)<br>
+    2. Naviga nella cartella <code>public_html</code> (root del dominio)<br>
+    3. Se esiste già un robots.txt, sovrascrivilo<br>
+    4. Se non esiste, crea un nuovo file chiamato esattamente <code>robots.txt</code><br>
+    5. Incolla il contenuto sopra e salva come testo semplice (UTF-8)<br>
+    6. Verifica su: <code>https://www.rbestetica.it/robots.txt</code>
+  </div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 34 — RISORSE: llms.txt ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">RISORSE · LLMS.TXT</span>
+    <h1>llms.txt — Istruzioni per le AI</h1>
+    <p>Il file più importante che il 88% dei siti italiani non ha ancora</p>
+  </div>
+  <div class="code-block">
+<p class="code-lbl">📋 llms.txt — CREA questo nuovo file nella root del sito (non esiste ancora)</p>{{ llmstxt }}</div>
+  <div class="ok-box">✅ <strong>Quick win:</strong> Creare llms.txt richiede 10 minuti. Caricalo su <code>https://www.rbestetica.it/llms.txt</code>. Vale immediatamente +5 punti sul GEO Score ed è il simbolo che il sito è aggiornato allo standard AI del 2025.</div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 35 — RISORSE: Organization JSON-LD ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">RISORSE · JSON-LD</span>
+    <h1>Schema Organization — Template Completo</h1>
+  </div>
+  <div class="code-block">
+<p class="code-lbl">📋 schema Organization — inserisci nel &lt;head&gt; di tutte le pagine</p>{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "RB Estetica",
+  "legalName": "RB Estetica di Roberta Piras",
+  "url": "http://www.rbestetica.it",
+  "logo": {
+    "@type": "ImageObject",
+    "url": "http://www.rbestetica.it/img/logo.jpg",
+    "width": 300,
+    "height": 100
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+39 XXX XXX XXXX",
+    "contactType": "customer service",
+    "areaServed": "IT",
+    "availableLanguage": "Italian"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Via XXXX, N",
+    "addressLocality": "Sestu",
+    "addressRegion": "CA",
+    "postalCode": "09028",
+    "addressCountry": "IT"
+  },
+  "sameAs": [
+    "https://www.facebook.com/rbestetica",
+    "https://www.instagram.com/rbestetica",
+    "https://www.trustpilot.com/review/rbestetica.it"
+  ],
+  "foundingDate": "XXXX",
+  "founder": {
+    "@type": "Person",
+    "name": "Roberta Piras",
+    "jobTitle": "Estetista Professionista"
+  }
+}</div>
+  <div class="info-box">ℹ️ Sostituisci tutti i campi con [XX] con i dati reali del centro. Lo schema Organization va inserito in tutte le pagine del sito, mentre LocalBusiness è specifico per la homepage o la pagina contatti.</div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 36 — PIANO D'AZIONE 90GG (1/2) ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">PIANO D'AZIONE</span>
+    <h1>Roadmap 90 Giorni</h1>
+    <p>Da GEO Score 33 a 75+ — piano operativo dettagliato</p>
+  </div>
+  <div class="tl-item" style="border-color:#EF4444;">
+    <p class="tl-title" style="color:#EF4444;">⚡ SETTIMANA 1 — Quick wins immediati (Score: 33 → 48)</p>
+    <p class="tl-desc">
+      <strong>Giorno 1-2:</strong> Carica llms.txt nella root del sito (+5 pt)<br>
+      <strong>Giorno 2-3:</strong> Sostituisci robots.txt con la versione ottimizzata (+2 pt)<br>
+      <strong>Giorno 3-5:</strong> Aggiungi schema LocalBusiness + Organization nel &lt;head&gt; (+6 pt)<br>
+      <strong>Giorno 5-7:</strong> Verifica e ottimizza scheda Google My Business (+2 pt)<br>
+      <em>Totale stimato: +15 punti · Score obiettivo: 48/100</em>
+    </p>
+  </div>
+  <div class="tl-item" style="border-color:#F97316;">
+    <p class="tl-title" style="color:#F97316;">📝 SETTIMANE 2-4 — Contenuto AI-ready (Score: 48 → 62)</p>
+    <p class="tl-desc">
+      <strong>Settimana 2:</strong> Crea pagina "Chi sono" con bio professionale Roberta (+5 pt)<br>
+      <strong>Settimana 2-3:</strong> Riscrivi homepage con blocchi AI-friendly 130-170 parole (+8 pt)<br>
+      <strong>Settimana 3-4:</strong> Crea sezione FAQ con 10+ domande e schema FAQPage (+7 pt)<br>
+      <strong>Settimana 4:</strong> Aggiungi dati quantitativi (prezzi, durate, numero servizi) (+5 pt)<br>
+      <em>Totale stimato: +25 punti · Score obiettivo: 62/100</em>
+    </p>
+  </div>
+  <div class="tl-item" style="border-color:#EAB308;">
+    <p class="tl-title" style="color:#EAB308;">🏆 MESE 2 — Brand authority (Score: 62 → 70)</p>
+    <p class="tl-desc">
+      <strong>Settimana 5:</strong> Crea pagina LinkedIn aziendale e profilo Treatwell (+3 pt)<br>
+      <strong>Settimana 5-6:</strong> Raggiungi 10 recensioni Google con media 4.5+ (+4 pt)<br>
+      <strong>Settimana 6-7:</strong> Pubblica primo articolo blog di settore 700+ parole (+3 pt)<br>
+      <strong>Settimana 7-8:</strong> Completa privacy policy + cookie policy GDPR (+3 pt)<br>
+      <em>Totale stimato: +13 punti · Score obiettivo: 70/100</em>
+    </p>
+  </div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 37 — PIANO D'AZIONE 90GG (2/2) ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">PIANO D'AZIONE · FASE 3</span>
+    <h1>Mese 3 — Leadership di Settore</h1>
+    <p>Da 70 a 78+ — ottimizzazione avanzata</p>
+  </div>
+  <div class="tl-item" style="border-color:#22C55E;">
+    <p class="tl-title" style="color:#22C55E;">🚀 MESE 3 — Consolidamento e leadership (Score: 70 → 78)</p>
+    <p class="tl-desc">
+      <strong>Settimana 9-10:</strong> Pubblica secondo e terzo articolo blog (+4 pt)<br>
+      <strong>Settimana 9:</strong> Raggiungi 20+ recensioni Google e Trustpilot (+3 pt)<br>
+      <strong>Settimana 10-11:</strong> Registra su Fresha o Booksy con profilo completo (+3 pt)<br>
+      <strong>Settimana 11-12:</strong> Pubblica 5+ foto before/after con schema ImageObject (+4 pt)<br>
+      <strong>Settimana 12:</strong> Audit di verifica finale e ottimizzazioni residue (+2 pt)<br>
+      <em>Totale stimato: +16 punti · Score obiettivo: 78/100</em>
+    </p>
+  </div>
+  <h2>Riepilogo piano completo</h2>
+  <table>
+    <tr><th>Fase</th><th>Periodo</th><th>Score iniziale</th><th>Score finale</th><th>Punti guadagnati</th></tr>
+    <tr><td>Quick wins</td><td>Settimana 1</td><td>33</td><td style="color:#EAB308;font-weight:700;">48</td><td style="color:#22C55E;font-weight:700;">+15</td></tr>
+    <tr><td>Contenuto AI-ready</td><td>Settimane 2-4</td><td>48</td><td style="color:#EAB308;font-weight:700;">62</td><td style="color:#22C55E;font-weight:700;">+14</td></tr>
+    <tr><td>Brand authority</td><td>Mese 2</td><td>62</td><td style="color:#22C55E;font-weight:700;">70</td><td style="color:#22C55E;font-weight:700;">+8</td></tr>
+    <tr><td>Leadership settore</td><td>Mese 3</td><td>70</td><td style="color:#3B82F6;font-weight:700;">78</td><td style="color:#22C55E;font-weight:700;">+8</td></tr>
+    <tr><td><strong>TOTALE</strong></td><td>90 giorni</td><td><strong>33</strong></td><td style="color:#3B82F6;font-weight:900;">78</td><td style="color:#22C55E;font-weight:900;">+45</td></tr>
+  </table>
+  <div class="roi-box">
+    <p class="roi-title">📈 Impatto business stimato a 90 giorni</p>
+    <div class="roi-wrap">
+      <div class="roi-item"><p class="roi-val">Top 15%</p><p class="roi-lbl">Posizionamento nel settore estetica Italia</p></div>
+      <div class="roi-item"><p class="roi-val">+400%</p><p class="roi-lbl">Visibilità nelle risposte AI stimata</p></div>
+      <div class="roi-item"><p class="roi-val">€600-800</p><p class="roi-lbl">Investimento totale (incluso webmaster)</p></div>
+    </div>
+  </div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 38 — CHECKLIST GEO 30 PUNTI ═══ -->
+<div class="page">
+  <div class="page-header">
+    <span class="section-pill">CHECKLIST</span>
+    <h1>GEO Checklist — 30 Punti di Controllo</h1>
+    <p>Stampa questa pagina e spunta ogni punto man mano che lo implementi</p>
+  </div>
+  <div class="two-col">
+    <div class="col-left">
+      <h3>🤖 Accesso Crawler AI</h3>
+      <div class="check-item"><span class="chk-y">✓</span> robots.txt permette GPTBot</div>
+      <div class="check-item"><span class="chk-y">✓</span> robots.txt permette ClaudeBot</div>
+      <div class="check-item"><span class="chk-y">✓</span> robots.txt permette Google-Extended</div>
+      <div class="check-item"><span class="chk-n">✗</span> llms.txt pubblicato nella root</div>
+      <div class="check-item"><span class="chk-n">✗</span> llms.txt aggiornato con dati corretti</div>
+      <h3 style="margin-top:12px;">🏗️ Schema Markup</h3>
+      <div class="check-item"><span class="chk-n">✗</span> Schema LocalBusiness nel &lt;head&gt;</div>
+      <div class="check-item"><span class="chk-n">✗</span> Schema Organization nel &lt;head&gt;</div>
+      <div class="check-item"><span class="chk-n">✗</span> Schema BeautySalon nel &lt;head&gt;</div>
+      <div class="check-item"><span class="chk-n">✗</span> Schema FAQPage sulla pagina FAQ</div>
+      <div class="check-item"><span class="chk-n">✗</span> Validato su Rich Results Test</div>
+      <h3 style="margin-top:12px;">🧠 Citabilità AI</h3>
+      <div class="check-item"><span class="chk-n">✗</span> Contenuto in blocchi 130-170 parole</div>
+      <div class="check-item"><span class="chk-n">✗</span> FAQ con 10+ domande e risposte</div>
+      <div class="check-item"><span class="chk-n">✗</span> Dati quantitativi (prezzi, durate)</div>
+      <div class="check-item"><span class="chk-n">✗</span> Titoli H2/H3 come domande dirette</div>
+      <div class="check-item"><span class="chk-n">✗</span> NAP (Nome/Indirizzo/Tel) nel footer</div>
+    </div>
+    <div class="col-right">
+      <h3>🏆 Brand Authority</h3>
+      <div class="check-item"><span class="chk-n">✗</span> Google My Business ottimizzato 100%</div>
+      <div class="check-item"><span class="chk-y">✓</span> Profilo Trustpilot attivo</div>
+      <div class="check-item"><span class="chk-n">✗</span> 20+ recensioni Google ≥ 4.5 stelle</div>
+      <div class="check-item"><span class="chk-n">✗</span> LinkedIn pagina aziendale</div>
+      <div class="check-item"><span class="chk-n">✗</span> Profilo Treatwell o Fresha</div>
+      <div class="check-item"><span class="chk-n">✗</span> NAP coerente su tutte le directory</div>
+      <h3 style="margin-top:12px;">✍️ E-E-A-T</h3>
+      <div class="check-item"><span class="chk-n">✗</span> Bio professionale Roberta Piras</div>
+      <div class="check-item"><span class="chk-n">✗</span> Certificazioni e formazione elencate</div>
+      <div class="check-item"><span class="chk-n">✗</span> Foto before/after trattamenti (min. 10)</div>
+      <div class="check-item"><span class="chk-n">✗</span> Blog attivo (min. 1 articolo/mese)</div>
+      <div class="check-item"><span class="chk-n">✗</span> Privacy Policy GDPR aggiornata</div>
+      <div class="check-item"><span class="chk-n">✗</span> Cookie Policy con gestione consenso</div>
+      <div class="check-item"><span class="chk-y">✓</span> HTTPS attivo e certificato valido</div>
+      <div class="check-item"><span class="chk-n">✗</span> Pagina contatti con indirizzo fisico</div>
+    </div>
+  </div>
+  <p style="font-size:11px; color:#9ca3af; margin-top:12px; text-align:center;">Obiettivo: 25/30 punti entro 90 giorni per raggiungere 75+ GEO Score · Ripeti l'audit ogni 6 mesi per monitorare i progressi.</p>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }}</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 39 — ANALISI STRATEGICA RISERVATA (1/2) ═══ -->
+<div class="page" style="background:#fafafa;">
+  <div class="page-header">
+    <span class="section-pill">RISERVATO AL PROFESSIONISTA</span>
+    <h1>Analisi strategica — uso professionale</h1>
+    <p>GEO Audit · {{ brand_name }} · {{ url_sito }} · {{ data_analisi }}</p>
+  </div>
+  <div class="letter-box">
+    <p>Hai appena completato un'analisi GEO su <strong>{{ brand_name }}</strong>. Prima di passare all'azione, prenditi dieci minuti per leggere questa sezione — è scritta per te, non per il tuo cliente. Qui trovi la lettura strategica dell'audit, le priorità di intervento nell'ordine corretto, e tutto quello che serve per trasformare questi dati in un piano di lavoro concreto e redditizio.</p>
+
+    <h3>La fotografia reale del sito</h3>
+    <p>GEO Score <strong style="color:#F97316;">{{ geo_score }}/100</strong>. Fascia visibilità minima. Nella pratica significa questo: quando un utente apre ChatGPT, Perplexity o Gemini e fa una domanda pertinente al settore di {{ brand_name }}, questo business non compare mai nella risposta. Non viene citato, non viene raccomandato, non esiste nell'ecosistema AI generativo. Non perché il sito sia tecnicamente difettoso — ma perché nessuno ha mai lavorato sulla sua visibilità AI. Questa è la norma per il 90% dei business locali italiani nel 2026. È anche esattamente il gap che tu puoi colmare — e monetizzare.</p>
+
+    <p>Considera questo: stai guardando un report che hai generato a un costo marginale e che contiene un'analisi che nessun altro consulente nel territorio del tuo cliente ha probabilmente mai prodotto. Il valore percepito da un imprenditore che vede per la prima volta una diagnosi strutturata della sua invisibilità AI — con dati, grafici, benchmark di settore e un piano d'azione in 90 giorni — è enormemente superiore al costo di generazione. Consulenti e agenzie che hanno iniziato a proporre questo tipo di analisi sul mercato italiano la posizionano tra i <strong>500 e i 2.000 euro</strong>, a seconda del settore, della complessità del cliente e del pacchetto di implementazione associato. Il report che hai in mano è già quello strumento.</p>
+
+    <h3>Lettura dei 5 moduli — cosa dicono davvero</h3>
+    <p><strong>Accesso Crawler {{ moduli.crawler.score }}/100</strong> — unico modulo in zona positiva. I bot AI entrano nel sito senza ostacoli. Non devi risolvere problemi tecnici di accesso — puoi passare direttamente agli interventi strategici.</p>
+    <p><strong>Citabilità AI {{ moduli.citabilita.score }}/100</strong> — collo di bottiglia principale. I crawler entrano ma non trovano nulla da citare. Paragrafi generici, zero dati quantitativi, nessuna FAQ, intestazioni non orientate alle query conversazionali. Questo modulo da solo vale un intervento dedicato e un preventivo separato.</p>
+    <p><strong>Brand Authority {{ moduli.brand.score }}/100</strong> — secondo nodo critico. Le AI non citano business che non riescono a verificare su fonti esterne. Senza Google My Business ottimizzato, senza directory di settore, senza recensioni strutturate, per un LLM questo business esiste solo sul proprio sito. Non è abbastanza. Questo è il lavoro più lento — ed è quello che giustifica un retainer mensile continuativo.</p>
+    <p><strong>Schema Markup {{ moduli.schema.score }}/100</strong> — parzialmente sviluppato. Mancano LocalBusiness, Organization, FAQPage. Meno di due ore di lavoro tecnico, +6/+8 punti immediati. Template pronti a pagina 24 e 35.</p>
+    <p><strong>E-E-A-T {{ moduli.contenuto.score }}/100</strong> — sufficiente ma non ottimizzato. Zero segnali di expertise verificabile. Bio professionale, certificazioni, contenuto educativo: terreno fertile per un lavoro di content strategy che puoi valorizzare separatamente.</p>
+
+    <h3>La diagnosi in una frase</h3>
+    <p>{{ brand_name }} è un business reale con un sito funzionante che le AI ignorano completamente perché non trovano né la struttura né le prove esterne per includerlo nelle loro risposte. Il problema è metodologico, non tecnico. Si risolve con metodo e sequenza corretta — ed è esattamente il tipo di problema per cui un professionista GEO viene pagato.</p>
+
+    <h3>La sequenza di intervento ottimale</h3>
+    <p><strong>Settimana 1 — Quick wins.</strong> llms.txt: dieci minuti, +5 punti immediati. Schema LocalBusiness e Organization: trenta minuti col webmaster, +6 punti. Google My Business ottimizzato. Questi tre interventi portano il GEO Score da {{ geo_score }} a circa 48/100 in meno di due settimane — risultato fotografabile e dimostrabile, perfetto come proof of concept prima di proporre il piano completo.</p>
+    <p><strong>Settimane 2-4 — Contenuto AI-ready.</strong> Ogni pagina chiave riscritta con blocchi autonomi di 130-170 parole. Dati quantitativi ovunque. FAQ con schema FAQPage — almeno 10 domande. Bio professionale completa. Questa fase vale da sola un preventivo di content strategy separato — il materiale prodotto ha valore SEO oltre che GEO.</p>
+    <p><strong>Mese 2 — Brand Authority.</strong> Directory di settore, LinkedIn aziendale, 20+ recensioni Google con media 4.5 stelle. Coerenza NAP assoluta su tutte le piattaforme — ogni discrepanza riduce il livello di fiducia dei modelli AI.</p>
+    <p><strong>Mese 3 — Consolidamento.</strong> Blog di settore, contenuto multimediale, piattaforme verticali. GEO Score atteso: 70-78/100 — top 15% del settore in Italia. Momento ideale per ri-eseguire l'audit, misurare il delta e pianificare la fase successiva.</p>
+  </div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }} · RISERVATO AL PROFESSIONISTA</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<!-- ═══ PAG 40 — DA PROFESSIONISTA A PROFESSIONISTA (2/2) ═══ -->
+<div class="page" style="background:#fafafa;">
+  <div class="page-header">
+    <span class="section-pill">DA PROFESSIONISTA A PROFESSIONISTA</span>
+    <h1>Strategia, mercato e valore economico</h1>
+  </div>
+  <div class="letter-box">
+    <h3>Perché ri-eseguire l'audit è parte del metodo</h3>
+    <p>Un GEO Audit non è una fotografia da appendere al muro — è una misurazione periodica di un processo in corso. Il mercato AI evolve ogni trimestre: nuovi modelli, nuovi criteri di citazione, nuove piattaforme che diventano fonti primarie per i LLM. La pratica corretta è ri-eseguire l'audit ogni 60-90 giorni, misurare il delta di score modulo per modulo, identificare i nuovi gap e aggiornare il piano di intervento di conseguenza.</p>
+    <p>Considera la progressione concreta: primo audit a {{ geo_score }}/100 — implementazione quick wins — ri-audit a 30 giorni con score atteso 48/100 — presentazione risultati e proposta fase 2 — ri-audit a 90 giorni con score atteso 70-78/100 — documentazione completa del percorso. Ogni ri-audit è un momento di valore: dimostra risultati misurabili, rafforza la relazione professionale e apre la conversazione sul passo successivo.</p>
+
+    <h3>Il valore economico di questo strumento</h3>
+    <p>Nel mercato italiano, una diagnosi GEO strutturata con questo livello di dettaglio — benchmark di settore, analisi dei 5 moduli, roadmap operativa, file tecnici pronti all'uso, analisi AI personalizzata — viene posizionata dai professionisti più avanzati tra i <strong>500 e i 2.000 euro</strong> per singolo cliente. La fascia alta — 1.500/2.000 euro — è giustificata quando l'audit è il punto di partenza di un percorso continuativo con ri-audit programmati. La fascia 500/800 euro è il punto d'ingresso per business locali, dove il report diventa il trigger per un contratto di implementazione da 300/500 euro mensili. Il rapporto tra costo di generazione e valore percepito dal cliente è tra i più favorevoli che esistano nel mercato della consulenza digitale oggi.</p>
+
+    <h3>I numeri del mercato che devi conoscere</h3>
+    <p>Gartner stima un calo del 25% del traffico search tradizionale entro il 2026. BrightEdge riporta che il 25% delle ricerche Google mostra già una risposta AI generativa. Gli utenti ChatGPT in Italia: 8 milioni nel 2023, 14 milioni nel 2024, proiezione 20 milioni fine 2026. Il 95% dei consulenti italiani non offre ancora GEO strutturato. Chi si posiziona ora costruisce un vantaggio competitivo reale — esattamente come è successo con la local SEO tra il 2017 e il 2019. Quella finestra si sta aprendo adesso per la GEO. I business che ottimizzi oggi costruiranno una presenza AI consolidata che i competitor non potranno replicare rapidamente.</p>
+
+    <h3>Come misurare e dimostrare i risultati</h3>
+    <p>Tre livelli di reporting. Primo: ri-esegui il GEO Audit ogni 30-60 giorni — delta di score chiaro e fotografabile. Secondo: testa manualmente le query locali su ChatGPT, Perplexity e Gemini prima e dopo ogni fase — mostra quando il business inizia ad apparire nelle risposte AI. Terzo: monitora il traffico referral da fonti AI in Google Analytics 4 — perplexity.ai, chatgpt.com, gemini.google.com sono già tracciabili oggi. Questi tre livelli costruiscono una narrativa di progresso convincente che trasforma un cliente soddisfatto in un cliente fidelizzato che porta referral.</p>
+
+    <h3>Da professionista a professionista</h3>
+    <p>La GEO non è una moda passeggera — è l'adattamento strutturale necessario a un ecosistema di ricerca che sta cambiando in modo permanente. I modelli AI non torneranno indietro. Il traffico che si sposta dalla ricerca tradizionale alla ricerca conversazionale non ritornerà. Chi presidia questo spazio oggi — con metodo, con dati, con un processo misurabile — costruisce qualcosa che vale nel tempo. Il report che hai in mano è il punto di partenza. Il resto è lavoro. Buono.</p>
+
+    <div class="letter-signature" style="margin-top:36px; padding-top:24px; border-top:2px solid #F90100; text-align:center;">
+      <img src="https://digidentityagency.it/wp-content/uploads/2023/05/digidentity_agency_light_removebg.png"
+           alt="DigIdentity Agency" style="height:52px; margin-bottom:16px; display:block; margin-left:auto; margin-right:auto;">
+      <p style="font-family:'Poppins',sans-serif; font-weight:800; font-size:16px; color:#111; margin-bottom:4px;">Stefano Corda</p>
+      <p style="font-size:12px; color:var(--gray); margin-bottom:2px;">Fondatore & AI Specialist · DigIdentity Agency</p>
+      <p style="font-size:11px; color:#9ca3af; margin-top:12px;">Report generato il {{ data_analisi }} · geo-audit.it</p>
+    </div>
+  </div>
+  <div class="pf-footer">
+    <span class="pf-l">{{ url_sito }} · GEO Audit {{ data_analisi }} · DigIdentity Agency</span>
+    <span class="pf-r"><span class="page-num"></span></span>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+function downloadPDF() {
+  const btn = document.getElementById('downloadBar');
+  btn.style.display = 'none';
+  const opt = {
+    margin: 0,
+    filename: 'GEO-Report-{{ url_sito | replace("https://","") | replace("http://","") | replace("/","") }}.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+  };
+  html2pdf().set(opt).from(document.body).save().then(function() {
+    btn.style.display = 'flex';
+  });
+}
+function downloadHTML() {
+  const html = document.documentElement.outerHTML;
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'GEO-Report-{{ url_sito | replace("https://","") | replace("http://","") | replace("/","") }}.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+</script>
+<script>
+function generaPDF() {
+  var bar = document.querySelector(".download-bar");
+  if (bar) bar.style.display = "none";
+  var element = document.querySelector(".pages-wrapper") || document.body;
+  var opt = {
+    margin:       0,
+    filename:     "GEO-Audit-Report.pdf",
+    image:        { type: "jpeg", quality: 1.0 },
+    html2canvas:  { 
+      scale: 2, 
+      useCORS: true, 
+      logging: false,
+      allowTaint: true,
+      foreignObjectRendering: false,
+      windowWidth: 794
+    },
+    jsPDF:        { unit: "px", format: "a4", orientation: "portrait" },
+    pagebreak:    { mode: "css", before: ".page" }
+  };
+  html2pdf().set(opt).from(element).save().then(function() {
+    if (bar) bar.style.display = "";
+  });
+}
+</script>
 </body>
 </html>

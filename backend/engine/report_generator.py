@@ -5,8 +5,11 @@ Powered by DigIdentity Agency
 """
 
 import os
+from dotenv import load_dotenv
+load_dotenv()
 import json
 import asyncio
+import re
 from datetime import datetime
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
@@ -19,7 +22,61 @@ REPORT_OUTPUT_DIR = os.getenv("REPORT_OUTPUT_DIR", "reports/output/")
 REPORT_LOGO_PATH = os.getenv("REPORT_LOGO_PATH", "frontend/assets/images/logo-digidentity.png")
 
 client_ai = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
-jinja_env = Environment(loader=FileSystemLoader("backend/templates"))
+jinja_env = Environment(
+    loader=FileSystemLoader("backend/templates"),
+    autoescape=False
+)
+jinja_env.globals['calcola_barra'] = lambda score: f"{min(max(int(score or 0), 0), 100)}%"
+
+
+# ============================================================
+# CONVERSIONE MARKDOWN → HTML
+# ============================================================
+
+def markdown_to_html(text: str) -> str:
+    """Converte Markdown semplice in HTML per le ai-box del report"""
+    if not text:
+        return ""
+    
+    # H1: # Titolo
+    text = re.sub(r'^# (.+)$', r'<h2 style="color:white;font-family:Poppins,sans-serif;font-size:15px;font-weight:800;margin:0 0 12px;border-bottom:2px solid #F90100;padding-bottom:6px;">\1</h2>', text, flags=re.MULTILINE)
+    
+    # H2: ## Titolo
+    text = re.sub(r'^## (.+)$', r'<h3 style="color:#e2e8f0;font-family:Poppins,sans-serif;font-size:13px;font-weight:700;margin:14px 0 6px;border-left:3px solid #F90100;padding-left:8px;">\1</h3>', text, flags=re.MULTILINE)
+    
+    # H3: ### Titolo
+    text = re.sub(r'^### (.+)$', r'<strong style="color:#e2e8f0;font-size:12px;">\1</strong><br>', text, flags=re.MULTILINE)
+    
+    # Grassetto: **testo**
+    text = re.sub(r'\*\*(.+?)\*\*', r'<strong style="color:white;">\1</strong>', text)
+    
+    # Corsivo: *testo*
+    text = re.sub(r'\*(.+?)\*', r'<em style="color:#cbd5e1;">\1</em>', text)
+    
+    # Inline code: `testo`
+    text = re.sub(r'`([^`]+)`', r'<code style="background:#2d2d4a;padding:1px 5px;border-radius:3px;font-family:JetBrains Mono,monospace;font-size:10.5px;color:#a5b4fc;">\1</code>', text)
+    
+    # Code block: ```...```
+    text = re.sub(r'```[\w]*\n(.*?)```', r'<pre style="background:#0d0d1a;border-radius:6px;padding:10px;font-family:JetBrains Mono,monospace;font-size:10px;color:#e2e8f0;white-space:pre-wrap;margin:8px 0;">\1</pre>', text, flags=re.DOTALL)
+    
+    # Lista puntata: - item o * item
+    text = re.sub(r'^[\-\*] (.+)$', r'<li style="color:#e2e8f0;font-size:12px;margin-bottom:3px;">\1</li>', text, flags=re.MULTILINE)
+    text = re.sub(r'(<li.*?</li>\n?)+', r'<ul style="padding-left:16px;margin:8px 0;">\g<0></ul>', text)
+    
+    # Lista numerata: 1. item
+    text = re.sub(r'^\d+\. (.+)$', r'<li style="color:#e2e8f0;font-size:12px;margin-bottom:3px;">\1</li>', text, flags=re.MULTILINE)
+    
+    # Linea orizzontale: ---
+    text = re.sub(r'^---+$', r'<hr style="border:none;border-top:1px solid #2d2d4a;margin:12px 0;">', text, flags=re.MULTILINE)
+    
+    # Paragrafi: righe vuote
+    text = re.sub(r'\n{2,}', r'</p><p style="color:#f1f5f9;font-size:12.5px;line-height:1.75;margin-bottom:8px;">', text)
+    text = f'<p style="color:#f1f5f9;font-size:12.5px;line-height:1.75;margin-bottom:8px;">{text}</p>'
+    
+    # Newline singoli
+    text = re.sub(r'\n', r'<br>', text)
+    
+    return text
 
 
 # ============================================================
@@ -278,6 +335,11 @@ Lingua principale: Italiano.
 """
 
 
+def calcola_barra(score: int) -> str:
+    """Calcola la larghezza della barra di progresso CSS"""
+    return f"{min(max(score, 0), 100)}%"
+
+
 # ============================================================
 # GENERATORE REPORT PRINCIPALE
 # ============================================================
@@ -326,6 +388,11 @@ async def genera_pdf_report(
         "benchmark": analisi_tasks[7] if not isinstance(analisi_tasks[7], Exception) else "",
     }
 
+    # Converti tutto il Markdown in HTML per le ai-box
+    for key in analisi:
+        if isinstance(analisi[key], str):
+            analisi[key] = markdown_to_html(analisi[key])
+
     logger.success("✅ Analisi Claude completate")
 
     # Prepara dati template
@@ -363,6 +430,10 @@ async def genera_pdf_report(
         "robots_ottimizzato": robots_ottimizzato,
         "llmstxt": llmstxt,
         "brand": brand,
+        "brand_name": brand,
+        "score_color": giudizio["colore"],
+        "score_emoji": giudizio["emoji"],
+        "crediti_residui": "—",
         "labels": labels,
         "anno": datetime.now().year,
     }

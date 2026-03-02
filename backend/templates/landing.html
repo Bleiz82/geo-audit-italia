@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GEO Audit Italia: Scopri come le AI citano il tuo sito. Analisi completa con audit GEO, visibilità AI e raccomandazioni personalizzate.">
+    <meta name="keywords" content="GEO, Generative Engine Optimization, audit, AI visibility, SEO italia, ChatGPT, Perplexity">
+    <meta name="author" content="DigIdentity Agency">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="GEO Audit Italia - Scopri la tua Visibilità AI">
+    <meta property="og:description" content="Analizza come ChatGPT, Perplexity e altre AI citano il tuo sito. GEO Score da 0-100 con raccomandazioni personalizzte.">
+    <meta property="og:image" content="https://example.com/og-image.jpg">
+    <meta property="og:url" content="https://geo-audit-italia.it">
+    
+    <!-- JSON-LD Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "GEO Audit Italia",
+        "description": "Tool per l'audit della visibilità AI e GEO Score del tuo sito",
+        "applicationCategory": "BusinessApplication",
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "1240",
+            "bestRating": "5",
+            "worstRating": "1"
+        }
+    }
+    </script>
+    
+    <title>GEO Audit Italia - Scopri la tua Visibilità nelle AI</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #F90100;
+            --secondary: #8B5CF6;
+            --light: #ffffff;
+            --light-gray: #f8f9fa;
+            --medium-gray: #e5e7eb;
+            --dark-gray: #6b7280;
+            --text: #111111;
+            --text-light: #374151;
+            --accent-red: #F90100;
+            --accent-purple: #8B5CF6;
+            --accent-blue: #3B82F6;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --error: #EF4444;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            background: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ========== NAVBAR ========== */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--light);
+            border-bottom: 1px solid var(--medium-gray);
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-red), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            background: var(--accent-red);
+            transition: width 0.3s ease;
+            left: 0;
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .cta-button {
+            background: var(--accent-red);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background: var(--accent-purple);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 2px;
+            background: var(--text);
+            transition: all 0.3s ease;
+        }
+
+        /* ========== HERO SECTION ========== */
+        .hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+            padding: 5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(249,1,0,0.1)" stroke-width="0.5"/></svg>');
+            opacity: 0.1;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 2;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: -1px;
+        }
+
+        .cursor-blink {
+            display: inline-block;
+            width: 3px;
+            height: 1em;
+            background: var(--accent-red);
+            margin-left: 4px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .button-primary {
+            background: var(--accent-red);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .button-primary:hover {
+            background: var(--accent-purple);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.4);
+        }
+
+        .button-secondary {
+            background: transparent;
+            color: white;
+            padding: 1rem 2rem;
+            border: 2px solid var(--accent-red);
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .button-secondary:hover {
+            background: var(--accent-red);
+            transform: translateY(-3px);
+        }
+
+        /* ========== TICKER ========== */
+        .ticker {
+            background: var(--accent-red);
+            color: white;
+            padding: 0.8rem 0;
+            overflow: hidden;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        .ticker-content {
+            display: flex;
+            animation: slide 20s linear infinite;
+            white-space: nowrap;
+        }
+
+        @keyframes slide {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .ticker-item {
+            padding: 0 3rem;
+        }
+
+        /* ========== PAIN POINTS SECTION ========== */
+        .problems {
+            background: var(--light-gray);
+            padding: 4rem 2rem;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .problem-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-red);
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .problem-card:nth-child(1) { animation-delay: 0.1s; }
+        .problem-card:nth-child(2) { animation-delay: 0.2s; }
+        .problem-card:nth-child(3) { animation-delay: 0.3s; }
+        .problem-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .problem-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .problem-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--accent-red);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .problem-card p {
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* ========== PROCESS SECTION ========== */
+        .process {
+            padding: 4rem 2rem;
+            background: white;
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .process-step {
+            text-align: center;
+            position: relative;
+        }
+
+        .process-step::before {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent-red), var(--accent-purple));
+            border-radius: 50%;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+            z-index: 1;
+        }
+
+        .process-step:nth-child(1)::before {
+            content: '1';
+        }
+
+        .process-step:nth-child(2)::before {
+            content: '2';
+        }
+
+        .process-step:nth-child(3)::before {
+            content: '3';
+        }
+
+        .process-step h3 {
+            font-size: 1.4rem;
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .process-step p {
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* ========== PRICING SECTION ========== */
+        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1100px; margin: 0 auto; }
+        .pricing-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 28px 24px; position: relative; }
+        .pricing-featured { border: 2px solid #F90100; transform: scale(1.03); box-shadow: 0 8px 32px rgba(249,1,0,0.15); }
+        .pricing-xl { border: 2px solid #8B5CF6; }
+        .pricing-enterprise { background: #111111; color: white; border: 2px solid #F90100; grid-column: span 1; }
+        .pricing-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #F90100; color: white; padding: 4px 16px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px; white-space: nowrap; }
+        .pricing-badge-purple { background: #8B5CF6; }
+        .pricing-header h3 { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 20px; margin-bottom: 4px; }
+        .pricing-subtitle { font-size: 13px; color: #6b7280; margin-bottom: 16px; }
+        .price-amount { font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 36px; color: #F90100; }
+        .price-period { font-size: 13px; color: #6b7280; margin-left: 4px; }
+        .pricing-features { list-style: none; padding: 0; margin: 20px 0; }
+        .pricing-features li { padding: 7px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
+        .pricing-enterprise .pricing-features li { border-bottom-color: rgba(255,255,255,0.1); }
+        .feat-yes::before { content: "✅ "; }
+        .feat-no::before { content: "❌ "; color: #d1d5db; }
+        .feat-no { color: #9ca3af; }
+        .btn-pricing { display: block; width: 100%; padding: 13px; border-radius: 8px; font-weight: 700; font-size: 14px; text-align: center; cursor: pointer; border: none; background: #F90100; color: white; margin-top: 16px; transition: all 0.2s; text-decoration: none; }
+        .btn-pricing:hover { background: #DC0000; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(249,1,0,0.3); }
+        .btn-pricing-featured { box-shadow: 0 6px 20px rgba(249,1,0,0.3); }
+        .btn-pricing-dark { background: transparent; border: 2px solid #F90100; color: white; }
+        .btn-pricing-dark:hover { background: #F90100; }
+        .pricing-note { text-align: center; font-size: 12px; color: #6b7280; margin-top: 24px; }
+
+        /* BILLING TOGGLE */
+        .billing-toggle {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+          margin-bottom: 40px;
+        }
+        .toggle-label { font-size: 14px; font-weight: 600; }
+        .badge-save {
+          background: #D1FAE5;
+          color: #065F46;
+          padding: 2px 8px;
+          border-radius: 20px;
+          font-size: 11px;
+          font-weight: 700;
+          margin-left: 6px;
+        }
+        .toggle-switch {
+          width: 48px;
+          height: 26px;
+          background: #e5e7eb;
+          border-radius: 20px;
+          cursor: pointer;
+          position: relative;
+          transition: background 0.3s;
+        }
+        .toggle-switch.active { background: #F90100; }
+        .toggle-dot {
+          width: 20px;
+          height: 20px;
+          background: white;
+          border-radius: 50%;
+          position: absolute;
+          top: 3px;
+          left: 3px;
+          transition: left 0.3s;
+          box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        }
+        .toggle-switch.active .toggle-dot { left: 25px; }
+        .price-note { font-size: 11px; color: #6b7280; margin-top: 4px; }
+        .pricing-badge-dark { background: #111111; }
+
+        @media (max-width: 900px) { .pricing-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 600px) { .pricing-grid { grid-template-columns: 1fr; } .pricing-featured { transform: scale(1); } }
+
+        /* ========== FAQ SECTION ========== */
+        .faq {
+            background: white;
+            padding: 4rem 2rem;
+        }
+
+        .faq-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--medium-gray);
+            padding: 1.5rem 0;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text);
+            transition: all 0.3s ease;
+            font-size: 1.05rem;
+        }
+
+        .faq-question:hover {
+            color: var(--accent-red);
+        }
+
+        .faq-toggle {
+            width: 25px;
+            height: 25px;
+            border: 2px solid var(--accent-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            color: var(--text-light);
+            line-height: 1.8;
+            transition: max-height 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            margin-top: 1rem;
+        }
+
+        /* ========== FINAL CTA SECTION ========== */
+        .final-cta {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .final-cta h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .final-cta p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background: #0f0f0f;
+            color: white;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--medium-gray);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--accent-red);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .footer-section a {
+            display: block;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            margin-bottom: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-red);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .button-primary,
+            .button-secondary {
+                width: 100%;
+            }
+
+            .problems-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .process-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        /* ========== ANIMATIONS ========== */
+        .counter {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-red);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-card p {
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">GEO Audit</div>
+            <ul class="nav-links">
+                <li><a href="#features">Funzionalità</a></li>
+                <li><a href="#pricing">Prezzi</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#" class="cta-button">Accedi</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- TICKER -->
+    <div class="ticker">
+        <div class="ticker-content">
+            <div class="ticker-item">🤖 ChatGPT Visibility</div>
+            <div class="ticker-item">🔍 Perplexity AI Analysis</div>
+            <div class="ticker-item">🧠 Claude Integration</div>
+            <div class="ticker-item">✨ Real-time Monitoring</div>
+            <div class="ticker-item">📊 GEO Score Tracking</div>
+            <div class="ticker-item">🤖 ChatGPT Visibility</div>
+            <div class="ticker-item">🔍 Perplexity AI Analysis</div>
+            <div class="ticker-item">🧠 Claude Integration</div>
+            <div class="ticker-item">✨ Real-time Monitoring</div>
+            <div class="ticker-item">📊 GEO Score Tracking</div>
+        </div>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Scopri come le AI citano il tuo sito<span class="cursor-blink"></span></h1>
+            <p>Analisi completa della visibilità generativa con GEO Score da 0-100 e raccomandazioni personalizzate per aumentare le citazioni da ChatGPT, Perplexity e altre AI.</p>
+            <div class="hero-buttons">
+                <a href="#" class="button-primary">Inizia l'Audit Gratuito</a>
+                <a href="#" class="button-secondary">Guarda la Demo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROBLEMS SECTION -->
+    <section class="problems">
+        <div class="section-container">
+            <h2 class="section-title">Il Tuo Sito è Invisibile alle AI</h2>
+            <p class="section-subtitle">Le AI non citano contenuti che non trovano, non comprendono o non considerano affidabili</p>
+            
+            <div class="problems-grid">
+                <div class="problem-card">
+                    <h3>🚫 Invisible</h3>
+                    <p>I crawler AI non accedono al tuo sito. Nessuna visibilità nei risultati generativi di ChatGPT e Perplexity.</p>
+                </div>
+                <div class="problem-card">
+                    <h3>🔗 Citation Gaps</h3>
+                    <p>Contenuti ottimizzati ma non citati. Le AI preferiscono fonti con maggior credibilità e autorità.</p>
+                </div>
+                <div class="problem-card">
+                    <h3>📉 Schema Deboli</h3>
+                    <p>Dati strutturati incompleti. Le AI non capiscono il contesto e la struttura del tuo contenuto.</p>
+                </div>
+                <div class="problem-card">
+                    <h3>❌ E-E-A-T Insufficiente</h3>
+                    <p>Mancanza di Expertise, Authoritativeness e Trustworthiness. Le AI non ti considerano una fonte affidabile.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS SECTION -->
+    <section class="process">
+        <div class="section-container">
+            <h2 class="section-title">Come Funziona il Nostro Audit</h2>
+            <p class="section-subtitle">3 semplici step per scoprire la tua visibilità AI</p>
+            
+            <div class="process-grid">
+                <div class="process-step">
+                    <h3>1. Submit URL</h3>
+                    <p>Inserisci l'URL del tuo sito. Analizziamo robots.txt, sitemap e accessibilità generale in tempo reale.</p>
+                </div>
+                <div class="process-step">
+                    <h3>2. Analisi Profonda</h3>
+                    <p>Sistema scannerizza 50+ fattori di GEO: citabilità AI, crawler access, schema markup, E-E-A-T e brand authority.</p>
+                </div>
+                <div class="process-step">
+                    <h3>3. Report Personalizato</h3>
+                    <p>Ricevi report PDF da 30-50 pagine con GEO Score, analisi Claude AI e piano d'azione prioritizzato.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING SECTION -->
+    <section class="pricing" id="pricing">
+        <div class="section-container">
+<span class="section-label">// PREZZI</span>
+<h2>Piani Trasparenti</h2>
+<p style="text-align:center;color:#6b7280;margin-bottom:32px;font-size:15px">
+  Scegli il piano giusto. Cambia o cancella quando vuoi.
+</p>
+
+<!-- TOGGLE MENSILE/ANNUALE -->
+<div class="billing-toggle">
+  <span class="toggle-label" id="label-mensile" style="font-weight:700;color:#111">Mensile</span>
+  <div class="toggle-switch" id="billingToggle" onclick="toggleBilling()">
+    <div class="toggle-dot" id="toggleDot"></div>
+  </div>
+  <span class="toggle-label" id="label-annuale" style="color:#6b7280">
+    Annuale <span class="badge-save">-25% · 2 mesi gratis</span>
+  </span>
+</div>
+
+<!-- PRICING GRID -->
+<div class="pricing-grid">
+
+  <!-- SINGOLO -->
+  <div class="pricing-card">
+    <div class="pricing-header">
+      <h3>Singolo</h3>
+      <p class="pricing-subtitle">Per chi vuole provare</p>
+      <div class="pricing-price">
+        <span class="price-amount">€99</span>
+        <span class="price-period"> una tantum</span>
+      </div>
+      <p class="price-note">1 audit — paghi una volta sola</p>
+    </div>
+    <ul class="pricing-features">
+      <li class="feat-yes">1 audit GEO completo</li>
+      <li class="feat-yes">Report PDF 30-50 pagine</li>
+      <li class="feat-yes">Analisi Claude AI in italiano</li>
+      <li class="feat-yes">Schema JSON-LD generato</li>
+      <li class="feat-yes">llms.txt + robots.txt ottimizzato</li>
+      <li class="feat-yes">Consegna via email in 5 minuti</li>
+    </ul>
+    <button class="btn-pricing" onclick="startCheckout('singolo')">Acquista ora →</button>
+  </div>
+
+  <!-- AGENCY (FEATURED) -->
+  <div class="pricing-card pricing-featured">
+    <div class="pricing-badge">PIÙ SCELTO</div>
+    <div class="pricing-header">
+      <h3>Agency</h3>
+      <p class="pricing-subtitle">Per web agency</p>
+      <div class="pricing-price">
+        <span class="price-amount" id="price-agency">€199</span>
+        <span class="price-period" id="period-agency">/mese</span>
+      </div>
+      <p class="price-note" id="note-agency">50 audit/mese — fatturato mensilmente</p>
+    </div>
+    <ul class="pricing-features">
+      <li class="feat-yes">50 audit/mese</li>
+      <li class="feat-yes">Report PDF 30-50 pagine</li>
+      <li class="feat-yes">Analisi Claude AI in italiano</li>
+      <li class="feat-yes">Schema JSON-LD generato</li>
+      <li class="feat-yes">llms.txt + robots.txt ottimizzato</li>
+      <li class="feat-yes">Consegna via email in 5 minuti</li>
+    </ul>
+    <button class="btn-pricing btn-pricing-featured" onclick="startCheckout('agency')">Abbonati ora →</button>
+  </div>
+
+  <!-- AGENCY PRO -->
+  <div class="pricing-card pricing-xl">
+    <div class="pricing-badge pricing-badge-dark">PRO</div>
+    <div class="pricing-header">
+      <h3>Agency Pro</h3>
+      <p class="pricing-subtitle">Per agenzie ad alto volume</p>
+      <div class="pricing-price">
+        <span class="price-amount" id="price-pro">€499</span>
+        <span class="price-period" id="period-pro">/mese</span>
+      </div>
+      <p class="price-note" id="note-pro">100 audit/mese — fatturato mensilmente</p>
+    </div>
+    <ul class="pricing-features">
+      <li class="feat-yes">100 audit/mese</li>
+      <li class="feat-yes">Report PDF 30-50 pagine</li>
+      <li class="feat-yes">Analisi Claude AI in italiano</li>
+      <li class="feat-yes">Schema JSON-LD generato</li>
+      <li class="feat-yes">llms.txt + robots.txt ottimizzato</li>
+      <li class="feat-yes">Consegna via email in 5 minuti</li>
+    </ul>
+    <button class="btn-pricing" onclick="startCheckout('agency_pro')">Abbonati ora →</button>
+  </div>
+
+</div>
+<p class="pricing-note">
+  * Tutti i piani includono le stesse funzionalità. L'unica differenza è il numero di audit mensili.<br>
+  Nessun contratto — cancelli quando vuoi.
+</p>
+        </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section class="faq" id="faq">
+        <div class="section-container">
+            <h2 class="section-title">Domande Frequenti</h2>
+            
+            <div class="faq-container">
+                <div class="faq-item active">
+                    <div class="faq-question">
+                        <span>Cos'è il GEO Score?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        GEO Score (0-100) misura la visibilità del tuo sito ai modelli di linguaggio AI come ChatGPT, Perplexity e Claude. Considera 50+ fattori inclusi struttura dati, accessibilità crawler, citabilità contenuto ed E-E-A-T.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Quanto tempo richiede l'audit?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        L'audit completo richiede tipicamente 5-15 minuti in base alla dimensione del sito. Il report con analisi Claude AI viene generato in tempo reale.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Posso scaricare il report in PDF?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Sì, il report viene generato in formato PDF da 30-50 pagine con tutte le analisi Claude AI, raccomandazioni e piano d'azione prioritizzato.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Come miglioro il mio GEO Score?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Il report include un piano d'azione personalizato con interventi immediati, a breve termine e a medio termine. Implementa le raccomandazioni prioritizzate per aumentare la visibilità AI.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>C'è supporto tecnico incluso?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Piano Free: nessun supporto. Piano Professional: supporto email. Piano Agency: priority support 24/7 via chat e telefono.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final-cta">
+        <div class="section-container">
+            <h2>Non Aspettare Più: Scopri Come ChatGPT Vede il Tuo Sito</h2>
+            <p>Senza cambiare nulla, saprai esattamente cosa fare per aumentare la visibilità generativa</p>
+            <a href="#" class="button-primary" style="margin-top: 2rem;">Inizia l'Audit Gratuito</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>GEO Audit Italia</h3>
+                <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 1rem;">La piattaforma per misurare e migliorare la visibilità AI del tuo sito.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Prodotto</h3>
+                <a href="#">Funzionalità</a>
+                <a href="#">Prezzi</a>
+                <a href="#">API</a>
+                <a href="#">Roadmap</a>
+            </div>
+            <div class="footer-section">
+                <h3>Supporto</h3>
+                <a href="#">Documentazione</a>
+                <a href="#">Blog</a>
+                <a href="#">Contatti</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+            <div class="footer-section">
+                <h3>Seguici</h3>
+                <a href="#">LinkedIn</a>
+                <a href="#">Twitter</a>
+                <a href="#">YouTube</a>
+                <a href="#">Newsletter</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 GEO Audit Italia by DigIdentity. Tutti i diritti riservati.</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        // ===== SMOOTH SCROLL & FORM SUBMISSION =====
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const target = document.querySelector(link.getAttribute('href'));
+                if (target && target.id) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Stripe Checkout Redirect for CTA Buttons
+        document.querySelectorAll('.button-primary').forEach(btn => {
+            if (!btn.href || btn.href.endsWith('#')) {
+                btn.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = '/api/stripe/checkout';
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'price_id';
+                    input.value = 'price_audit_single';
+                    form.appendChild(input);
+                    document.body.appendChild(form);
+                    form.submit();
+                });
+            }
+        });
+
+        // ===== MOBILE MENU =====
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        if (hamburger) {
+            hamburger.addEventListener('click', () => {
+                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            });
+        }
+
+        // ===== FAQ ACCORDION =====
+        document.querySelectorAll('.faq-item').forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                document.querySelectorAll('.faq-item').forEach(i => {
+                    if (i !== item) i.classList.remove('active');
+                });
+                item.classList.toggle('active');
+            });
+        });
+
+        // ===== COUNTER ANIMATION =====
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target.querySelector('.counter');
+                    if (counter && !counter.classList.contains('animated')) {
+                        animateCounter(counter);
+                        counter.classList.add('animated');
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.stat-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        function animateCounter(element) {
+            const target = parseInt(element.textContent);
+            let current = 0;
+            const increment = Math.ceil(target / 50);
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.round(current);
+                }
+            }, 30);
+        }
+
+        let isAnnuale = false;
+
+        function toggleBilling() {
+          isAnnuale = !isAnnuale;
+          const toggle = document.getElementById('billingToggle');
+          const labelMensile = document.getElementById('label-mensile');
+          const labelAnnuale = document.getElementById('label-annuale');
+
+          toggle.classList.toggle('active', isAnnuale);
+
+          if (isAnnuale) {
+            labelMensile.style.fontWeight = '400';
+            labelMensile.style.color = '#6b7280';
+            labelAnnuale.style.fontWeight = '700';
+            labelAnnuale.style.color = '#111';
+
+            document.getElementById('price-agency').textContent = '€149';
+            document.getElementById('period-agency').textContent = '/mese';
+            document.getElementById('note-agency').textContent = 'Fatturato annualmente · risparmi €600';
+
+            document.getElementById('price-pro').textContent = '€399';
+            document.getElementById('period-pro').textContent = '/mese';
+            document.getElementById('note-pro').textContent = 'Fatturato annualmente · risparmi €1.200';
+          } else {
+            labelMensile.style.fontWeight = '700';
+            labelMensile.style.color = '#111';
+            labelAnnuale.style.fontWeight = '400';
+            labelAnnuale.style.color = '#6b7280';
+
+            document.getElementById('price-agency').textContent = '€199';
+            document.getElementById('period-agency').textContent = '/mese';
+            document.getElementById('note-agency').textContent = 'Fatturato mensilmente';
+
+            document.getElementById('price-pro').textContent = '€499';
+            document.getElementById('period-pro').textContent = '/mese';
+            document.getElementById('note-pro').textContent = 'Fatturato mensilmente';
+          }
+        }
+    </script>
+</body>
+</html>
